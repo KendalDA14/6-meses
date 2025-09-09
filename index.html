@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Mi Amor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'morado': '#8B5CF6',
+                        'rosa': '#EC4899',
+                        'azul-navy': '#1E3A8A'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-white">
+    <!-- Added loading screen with heart animation -->
+    <div id="loadingScreen" class="fixed inset-0 bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 z-50 flex items-center justify-center">
+        <div class="text-center">
+            <div class="mb-8">
+                <h1 class="text-4xl font-bold bg-gradient-to-r from-morado via-rosa to-azul-navy bg-clip-text text-transparent mb-4">
+                    Cargando algo especial para ti...
+                </h1>
+            </div>
+            
+            <!-- Heart loading animation -->
+            <div class="relative w-32 h-32 mx-auto mb-8">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <i class="fas fa-heart text-6xl text-rosa animate-pulse loading-heart-1"></i>
+                </div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <i class="fas fa-heart text-4xl text-morado animate-pulse loading-heart-2"></i>
+                </div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <i class="fas fa-heart text-3xl text-azul-navy animate-pulse loading-heart-3"></i>
+                </div>
+            </div>
+            
+            <!-- Floating hearts around -->
+            <div class="floating-hearts">
+                <i class="fas fa-heart floating-heart" style="left: 10%; animation-delay: 0s;"></i>
+                <i class="fas fa-heart floating-heart" style="left: 20%; animation-delay: 0.5s;"></i>
+                <i class="fas fa-heart floating-heart" style="left: 30%; animation-delay: 1s;"></i>
+                <i class="fas fa-heart floating-heart" style="left: 70%; animation-delay: 1.5s;"></i>
+                <i class="fas fa-heart floating-heart" style="left: 80%; animation-delay: 2s;"></i>
+                <i class="fas fa-heart floating-heart" style="left: 90%; animation-delay: 2.5s;"></i>
+            </div>
+            
+            <!-- Loading bar -->
+            <div class="w-64 h-2 bg-white/30 rounded-full mx-auto overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-morado via-rosa to-azul-navy rounded-full loading-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Added hidden class to main content initially -->
+    <div id="mainContent" class="hidden">
+        <!-- Sección Central Inicial -->
+        <section class="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50">
+            <div class="text-center max-w-4xl mx-auto px-6">
+                <div class="bg-white/80 backdrop-blur-sm rounded-3xl p-12 shadow-2xl border border-purple-100">
+                    <h1 class="text-6xl font-bold bg-gradient-to-r from-morado via-rosa to-azul-navy bg-clip-text text-transparent mb-8">
+                        Para Ti, Mi Amor
+                    </h1>
+                    <div class="prose prose-lg mx-auto text-gray-700 leading-relaxed">
+                        <p class="text-xl mb-6">
+                            Cada día a tu lado es una nueva aventura, una nueva razón para sonreír. 
+                            Eres la luz que ilumina mis días más oscuros y la melodía que hace bailar mi corazón.
+                        </p>
+                        <p class="text-lg text-morado font-medium">
+                            Esta página es solo una pequeña muestra de todo lo que significas para mí...
+                        </p>
+                    </div>
+                    <!-- Added 6 hearts representing 6 months together -->
+                    <div class="mt-8 flex justify-center space-x-3">
+                        <i class="fas fa-heart text-rosa text-3xl animate-pulse"></i>
+                        <i class="fas fa-heart text-morado text-3xl animate-pulse" style="animation-delay: 0.2s"></i>
+                        <i class="fas fa-heart text-azul-navy text-3xl animate-pulse" style="animation-delay: 0.4s"></i>
+                        <i class="fas fa-heart text-rosa text-3xl animate-pulse" style="animation-delay: 0.6s"></i>
+                        <i class="fas fa-heart text-morado text-3xl animate-pulse" style="animation-delay: 0.8s"></i>
+                        <i class="fas fa-heart text-azul-navy text-3xl animate-pulse" style="animation-delay: 1s"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 1 - Derecha -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 md:order-1">
+                        <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8">
+                            <h2 class="text-3xl font-bold text-morado mb-6">Tu Sonrisa</h2>
+                            <p class="text-gray-700 text-lg leading-relaxed">
+                                Tu sonrisa es como el amanecer después de la noche más larga. 
+                                Ilumina todo a tu alrededor y me recuerda que la felicidad existe. 
+                                Cada vez que sonríes, mi mundo se llena de colores que no sabía que existían.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="order-1 md:order-2">
+                        <div class="relative">
+                            <img src="/placeholder.svg?height=400&width=500" 
+                                 alt="Sonrisa" 
+                                 class="rounded-2xl shadow-2xl w-full h-80 object-cover border-4 border-rosa/20">
+                            <div class="absolute -top-4 -right-4 bg-rosa text-white p-3 rounded-full">
+                                <i class="fas fa-smile text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 2 - Izquierda -->
+        <section class="py-20 bg-gradient-to-r from-blue-50 to-purple-50">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="relative">
+                        <img src="/placeholder.svg?height=400&width=500" 
+                             alt="Nuestros momentos" 
+                             class="rounded-2xl shadow-2xl w-full h-80 object-cover border-4 border-azul-navy/20">
+                        <div class="absolute -top-4 -left-4 bg-azul-navy text-white p-3 rounded-full">
+                            <i class="fas fa-heart text-2xl"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+                            <h2 class="text-3xl font-bold text-azul-navy mb-6">Nuestros Momentos</h2>
+                            <p class="text-gray-700 text-lg leading-relaxed">
+                                Cada momento contigo se convierte en un recuerdo precioso que guardo en mi corazón. 
+                                Desde nuestras largas conversaciones hasta nuestros silencios cómplices, 
+                                todo cobra sentido cuando estás a mi lado.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 3 - Derecha -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 md:order-1">
+                        <div class="bg-gradient-to-br from-pink-50 to-purple-50 rounded-2xl p-8">
+                            <h2 class="text-3xl font-bold text-rosa mb-6">Tu Mirada</h2>
+                            <p class="text-gray-700 text-lg leading-relaxed">
+                                En tus ojos encuentro mi hogar, mi paz, mi futuro. 
+                                Cada mirada tuya es como una caricia al alma, 
+                                me hablas sin palabras y me entiendes sin explicaciones.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="order-1 md:order-2">
+                        <div class="relative">
+                            <img src="/placeholder.svg?height=400&width=500" 
+                                 alt="Tu mirada" 
+                                 class="rounded-2xl shadow-2xl w-full h-80 object-cover border-4 border-morado/20">
+                            <div class="absolute -top-4 -right-4 bg-rosa text-white p-3 rounded-full">
+                                <i class="fas fa-eye text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 4 - Izquierda -->
+        <section class="py-20 bg-gradient-to-r from-purple-50 to-blue-50">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="relative">
+                        <img src="/placeholder.svg?height=400&width=500" 
+                             alt="Bailando juntos" 
+                             class="rounded-2xl shadow-2xl w-full h-80 object-cover border-4 border-rosa/20">
+                        <div class="absolute -top-4 -left-4 bg-rosa text-white p-3 rounded-full">
+                            <i class="fas fa-music text-2xl"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+                            <h2 class="text-3xl font-bold text-morado mb-6">Nuestra Canción</h2>
+                            <p class="text-gray-700 text-lg leading-relaxed">
+                                Cada canción que escuchamos juntos se convierte en parte de nuestra historia. 
+                                La música suena diferente cuando estás conmigo, 
+                                como si el universo hubiera creado melodías especiales solo para nosotros.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 5 - Derecha -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 md:order-1">
+                        <div class="bg-gradient-to-br from-blue-50 to-pink-50 rounded-2xl p-8">
+                            <h2 class="text-3xl font-bold text-azul-navy mb-6">Nuestros Sueños</h2>
+                            <p class="text-gray-700 text-lg leading-relaxed">
+                                Contigo he aprendido a soñar en grande, a imaginar un futuro lleno de aventuras, 
+                                risas y amor infinito. Cada plan que hacemos juntos es una promesa de felicidad.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="order-1 md:order-2">
+                        <div class="relative">
+                            <img src="/placeholder.svg?height=400&width=500" 
+                                 alt="Nuestros sueños" 
+                                 class="rounded-2xl shadow-2xl w-full h-80 object-cover border-4 border-azul-navy/20">
+                            <div class="absolute -top-4 -right-4 bg-azul-navy text-white p-3 rounded-full">
+                                <i class="fas fa-star text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 6 - Izquierda -->
+        <section class="py-20 bg-gradient-to-r from-pink-50 to-purple-50">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="relative">
+                        <img src="/placeholder.svg?height=400&width=500" 
+                             alt="Para siempre" 
+                             class="rounded-2xl shadow-2xl w-full h-80 object-cover border-4 border-morado/20">
+                        <div class="absolute -top-4 -left-4 bg-morado text-white p-3 rounded-full">
+                            <i class="fas fa-infinity text-2xl"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+                            <h2 class="text-3xl font-bold text-rosa mb-6">Para Siempre</h2>
+                            <p class="text-gray-700 text-lg leading-relaxed">
+                                No importa cuánto tiempo pase, mi amor por ti solo crece. 
+                                Eres mi presente, mi futuro, mi para siempre. 
+                                Contigo he encontrado el significado verdadero del amor eterno.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Central con Dedicatoria y Música -->
+        <section class="py-20 bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100">
+            <div class="max-w-4xl mx-auto px-6 text-center">
+                <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-12 shadow-2xl border border-purple-200">
+                    <h2 class="text-5xl font-bold bg-gradient-to-r from-morado via-rosa to-azul-navy bg-clip-text text-transparent mb-8">
+                        Mi Dedicatoria Para Ti
+                    </h2>
+                    <div class="prose prose-xl mx-auto text-gray-700 mb-8">
+                        <p class="text-2xl leading-relaxed mb-6">
+                            Amor mío, esta canción es nuestra. Cada nota, cada palabra, 
+                            cada silencio entre las melodías habla de lo que siento por ti.
+                        </p>
+                        <p class="text-lg text-morado font-medium mb-8">
+                            Cierra los ojos, escucha con el corazón, y siente todo mi amor llegando hasta ti...
+                        </p>
+                    </div>
+                    
+                    <!-- Reproductor de Música -->
+                    <div class="bg-gradient-to-r from-morado/10 to-rosa/10 rounded-2xl p-8 mb-8">
+                        <div class="flex items-center justify-center mb-6">
+                            <button id="playButton" class="bg-gradient-to-r from-morado to-rosa text-white px-8 py-4 rounded-full text-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center space-x-3">
+                                <i class="fas fa-play" id="playIcon"></i>
+                                <span id="buttonText">Reproducir Nuestra Canción</span>
+                            </button>
+                        </div>
+                        <!-- Added blur effect to song name that clears when music plays -->
+                        <p id="songName" class="text-sm text-gray-600 text-center blur-sm transition-all duration-500">
+                            <i class="fas fa-music text-rosa mr-2"></i>
+                            Chino & Nacho - Niña Bonita
+                        </p>
+                    </div>
+
+                    <!-- Added 6 hearts representing 6 months together -->
+                    <div class="flex justify-center space-x-3 text-4xl">
+                        <i class="fas fa-heart text-rosa animate-pulse"></i>
+                        <i class="fas fa-heart text-morado animate-pulse" style="animation-delay: 0.2s"></i>
+                        <i class="fas fa-heart text-azul-navy animate-pulse" style="animation-delay: 0.4s"></i>
+                        <i class="fas fa-heart text-rosa animate-pulse" style="animation-delay: 0.6s"></i>
+                        <i class="fas fa-heart text-morado animate-pulse" style="animation-delay: 0.8s"></i>
+                        <i class="fas fa-heart text-azul-navy animate-pulse" style="animation-delay: 1s"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Final - Te Amo -->
+        <section class="py-20 bg-gradient-to-br from-pink-100 via-purple-50 to-blue-100 min-h-screen flex items-center">
+            <div class="max-w-6xl mx-auto px-6 text-center">
+                <div class="mb-12">
+                    <h1 class="text-8xl md:text-9xl font-bold bg-gradient-to-r from-rosa via-morado to-azul-navy bg-clip-text text-transparent mb-8 animate-pulse">
+                        TE AMO
+                    </h1>
+                    <p class="text-2xl text-gray-700 font-medium">
+                        Con todo mi corazón, por toda la eternidad
+                    </p>
+                </div>
+                
+                <!-- Flores Decorativas -->
+                <div class="flex justify-center items-center space-x-8 mb-12">
+                    <div class="text-6xl text-rosa animate-bounce" style="animation-delay: 0s">🌹</div>
+                    <div class="text-5xl text-morado animate-bounce" style="animation-delay: 0.2s">🌸</div>
+                    <div class="text-6xl text-azul-navy animate-bounce" style="animation-delay: 0.4s">🌺</div>
+                    <div class="text-5xl text-rosa animate-bounce" style="animation-delay: 0.6s">🌷</div>
+                    <div class="text-6xl text-morado animate-bounce" style="animation-delay: 0.8s">🌻</div>
+                </div>
+
+                <!-- Más flores en círculo -->
+                <div class="relative w-80 h-80 mx-auto">
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 text-4xl text-rosa animate-spin" style="animation-duration: 10s">🌹</div>
+                    <div class="absolute top-1/4 right-0 text-3xl text-morado animate-spin" style="animation-duration: 12s; animation-delay: 1s">🌸</div>
+                    <div class="absolute bottom-1/4 right-0 text-4xl text-azul-navy animate-spin" style="animation-duration: 8s; animation-delay: 2s">🌺</div>
+                    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        <i class="fas fa-heart text-6xl text-rosa animate-pulse"></i>
+                    </div>
+                    <div class="absolute bottom-1/4 left-0 text-4xl text-rosa animate-spin" style="animation-duration: 11s; animation-delay: 4s">🌷</div>
+                    <div class="absolute top-1/4 left-0 text-3xl text-morado animate-spin" style="animation-duration: 9s; animation-delay: 5s">🌼</div>
+                </div>
+
+                <div class="mt-12">
+                    <p class="text-lg text-gray-600 italic">
+                        "En un mundo lleno de flores, tú eres mi jardín completo"
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Replaced email form with hidden section about her eyes -->
+        <section class="py-20 bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
+            <div class="max-w-4xl mx-auto px-6 text-center">
+                <!-- Hidden section trigger button -->
+                <div class="mb-8">
+                    <button 
+                        id="secretButton" 
+                        class="bg-gradient-to-r from-morado via-rosa to-azul-navy text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center space-x-3 mx-auto"
+                    >
+                        <i class="fas fa-heart"></i>
+                        <span>Algo Especial Para Ti</span>
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                
+                <!-- Hidden content -->
+                <div id="hiddenSection" class="hidden transform transition-all duration-1000 ease-in-out">
+                    <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-12 shadow-2xl border border-purple-200">
+                        <h2 class="text-4xl font-bold bg-gradient-to-r from-morado via-rosa to-azul-navy bg-clip-text text-transparent mb-8">
+                            Lo Que Más Me Encanta De Ti
+                        </h2>
+                        
+                        <div class="prose prose-xl mx-auto text-gray-700 mb-8">
+                            <p class="text-2xl leading-relaxed mb-6 text-morado font-medium">
+                                Son tus ojitos...
+                            </p>
+                            <p class="text-lg mb-8">
+                                En tus ojos encuentro todo lo que necesito: paz, amor, hogar y futuro. 
+                                Cada mirada tuya es como un abrazo al alma, me hablas sin palabras y 
+                                me entiendes sin explicaciones. Tus ojitos son las ventanas a tu hermoso 
+                                corazón, y cada vez que los veo, me enamoro de ti una vez más.
+                            </p>
+                        </div>
+                        
+                        <!-- Photo placeholder -->
+                        <div class="relative max-w-md mx-auto mb-8">
+                            <img 
+                                src="/placeholder.svg?height=400&width=400" 
+                                alt="Tus hermosos ojitos" 
+                                class="rounded-2xl shadow-2xl w-full h-80 object-cover border-4 border-gradient-to-r from-morado to-rosa"
+                            >
+                            <div class="absolute -top-4 -right-4 bg-rosa text-white p-3 rounded-full">
+                                <i class="fas fa-heart text-2xl animate-pulse"></i>
+                            </div>
+                            <div class="absolute -bottom-4 -left-4 bg-morado text-white p-3 rounded-full">
+                                <i class="fas fa-eye text-2xl"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- Added 6 hearts representing 6 months together -->
+                        <div class="flex justify-center space-x-3 text-4xl">
+                            <i class="fas fa-heart text-rosa animate-pulse"></i>
+                            <i class="fas fa-heart text-morado animate-pulse" style="animation-delay: 0.2s"></i>
+                            <i class="fas fa-heart text-azul-navy animate-pulse" style="animation-delay: 0.4s"></i>
+                            <i class="fas fa-heart text-rosa animate-pulse" style="animation-delay: 0.6s"></i>
+                            <i class="fas fa-heart text-morado animate-pulse" style="animation-delay: 0.8s"></i>
+                            <i class="fas fa-heart text-azul-navy animate-pulse" style="animation-delay: 1s"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Updated audio element to use local MP3 file -->
+    <audio id="backgroundMusic" preload="metadata">
+        <source src="Chino & Nacho - Niña Bonita - ChinoNachoVEVO.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <script>
+        const audio = document.getElementById('backgroundMusic');
+        const playButton = document.getElementById('playButton');
+        const playIcon = document.getElementById('playIcon');
+        const buttonText = document.getElementById('buttonText');
+        const songName = document.getElementById('songName');
+        
+        let isPlaying = false;
+        
+        // Set audio to start at 28 seconds
+        audio.currentTime = 28;
+        
+        function togglePlayback() {
+            if (isPlaying) {
+                audio.pause();
+                playIcon.className = 'fas fa-play';
+                buttonText.textContent = 'Reproducir Nuestra Canción';
+                songName.classList.add('blur-sm');
+                isPlaying = false;
+            } else {
+                // Always start from second 28
+                audio.currentTime = 28;
+                audio.play().then(() => {
+                    playIcon.className = 'fas fa-pause';
+                    buttonText.textContent = 'Pausar Música';
+                    songName.classList.remove('blur-sm');
+                    isPlaying = true;
+                }).catch(error => {
+                    console.error('Error playing audio:', error);
+                    alert('Error al reproducir la canción. Asegúrate de que el archivo esté disponible.');
+                });
+            }
+        }
+        
+        // Handle audio events
+        audio.addEventListener('ended', () => {
+            playIcon.className = 'fas fa-play';
+            buttonText.textContent = 'Reproducir Nuestra Canción';
+            songName.classList.add('blur-sm');
+            isPlaying = false;
+        });
+        
+        audio.addEventListener('pause', () => {
+            playIcon.className = 'fas fa-play';
+            buttonText.textContent = 'Reproducir Nuestra Canción';
+            songName.classList.add('blur-sm');
+            isPlaying = false;
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show loading screen for 5 seconds
+            setTimeout(function() {
+                document.getElementById('loadingScreen').style.opacity = '0';
+                document.getElementById('loadingScreen').style.transition = 'opacity 1s ease';
+                
+                setTimeout(function() {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                    document.getElementById('mainContent').classList.remove('hidden');
+                    document.getElementById('mainContent').style.opacity = '0';
+                    document.getElementById('mainContent').style.transition = 'opacity 1s ease';
+                    
+                    setTimeout(function() {
+                        document.getElementById('mainContent').style.opacity = '1';
+                    }, 100);
+                }, 1000);
+            }, 5000);
+        });
+
+        // Handle hidden section reveal
+        document.getElementById('secretButton').addEventListener('click', function() {
+            const hiddenSection = document.getElementById('hiddenSection');
+            const button = document.getElementById('secretButton');
+            
+            if (hiddenSection.classList.contains('hidden')) {
+                hiddenSection.classList.remove('hidden');
+                hiddenSection.style.opacity = '0';
+                hiddenSection.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    hiddenSection.style.opacity = '1';
+                    hiddenSection.style.transform = 'translateY(0)';
+                }, 100);
+                
+                button.innerHTML = '<i class="fas fa-heart"></i><span>Ocultar Mensaje</span><i class="fas fa-eye-slash"></i>';
+            } else {
+                hiddenSection.style.opacity = '0';
+                hiddenSection.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    hiddenSection.classList.add('hidden');
+                }, 300);
+                
+                button.innerHTML = '<i class="fas fa-heart"></i><span>Algo Especial Para Ti</span><i class="fas fa-eye"></i>';
+            }
+        });
+
+        playButton.addEventListener('click', togglePlayback);
+
+        // Animaciones adicionales
+        document.addEventListener('DOMContentLoaded', function() {
+            // Efecto de aparición gradual para las secciones
+            const sections = document.querySelectorAll('section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(50px)';
+                section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(section);
+            });
+        });
+
+        // Efecto de partículas de corazones flotantes
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '💖';
+            heart.style.position = 'fixed';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '100vh';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            heart.style.pointerEvents = 'none';
+            heart.style.zIndex = '1000';
+            heart.style.animation = 'floatUp 6s linear forwards';
+            
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }
+
+        // Crear corazones flotantes cada 3 segundos
+        setInterval(createFloatingHeart, 3000);
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatUp {
+                0% {
+                    transform: translateY(0) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(-100vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+            
+            .loading-heart-1 {
+                animation: pulse 1.5s ease-in-out infinite;
+            }
+            
+            .loading-heart-2 {
+                animation: pulse 1.5s ease-in-out infinite 0.3s;
+            }
+            
+            .loading-heart-3 {
+                animation: pulse 1.5s ease-in-out infinite 0.6s;
+            }
+            
+            .floating-heart {
+                position: absolute;
+                color: #EC4899;
+                font-size: 1.5rem;
+                animation: floatUpDown 3s ease-in-out infinite;
+                top: 50%;
+            }
+            
+            @keyframes floatUpDown {
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-20px); }
+            }
+            
+            .loading-bar {
+                width: 0%;
+                animation: loadingProgress 5s ease-out forwards;
+            }
+            
+            @keyframes loadingProgress {
+                0% { width: 0%; }
+                100% { width: 100%; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
