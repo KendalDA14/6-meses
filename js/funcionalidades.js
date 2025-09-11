@@ -82,7 +82,7 @@ document.getElementById("secretButton").addEventListener("click", function () {
         setTimeout(() => {
           specialAudio.pause();
           specialAudio.currentTime = 5; 
-        }, 21000);
+        }, 22000);
       })
       .catch((error) => {
         console.error("Error playing special audio:", error);

@@ -1,681 +1,486 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Para My Love</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              morado: "#8B5CF6",
-              rosa: "#EC4899",
-              "azul-navy": "#1E3A8A",
-            },
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para My Love Anahí</title>
+  <link rel="icon" href="img/corazon.png" type="image/png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            morado: "#8B5CF6",
+            rosa: "#EC4899",
+            "azul-navy": "#1E3A8A",
           },
         },
-      };
-    </script>
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-      rel="stylesheet"
-    />
-  </head>
-  <body class="bg-white">
-    <div
-      id="loadingScreen"
-      class="fixed inset-0 bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 z-50 flex items-center justify-center"
-    >
-      <div class="text-center">
-        <div class="mb-8">
-          <h1
-            class="text-4xl font-bold bg-gradient-to-r from-morado via-rosa to-azul-navy bg-clip-text text-transparent mb-4"
-          >
-            Dididialessssss... Que nervios
-          </h1>
-        </div>
+      },
+    };
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+</head>
 
-        <div class="relative w-32 h-32 mx-auto mb-8">
-          <div class="absolute inset-0 flex items-center justify-center">
-            <i
-              class="fas fa-heart text-6xl text-rosa animate-pulse loading-heart-1"
-            ></i>
-          </div>
-          <div class="absolute inset-0 flex items-center justify-center">
-            <i
-              class="fas fa-heart text-4xl text-morado animate-pulse loading-heart-2"
-            ></i>
-          </div>
-          <div class="absolute inset-0 flex items-center justify-center">
-            <i
-              class="fas fa-heart text-3xl text-azul-navy animate-pulse loading-heart-3"
-            ></i>
-          </div>
-        </div>
+<body class="bg-white">
+  <div id="loadingScreen"
+    class="fixed inset-0 bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 z-50 flex items-center justify-center">
+    <div class="text-center">
+      <div class="mb-8">
+        <h1
+          class="text-4xl font-bold bg-gradient-to-r from-morado via-rosa to-azul-navy bg-clip-text text-transparent mb-4">
+          Dididialessssss... Que nervios
+        </h1>
+      </div>
 
-        <div class="floating-hearts">
-          <i
-            class="fas fa-heart floating-heart"
-            style="left: 10%; animation-delay: 0s"
-          ></i>
-          <i
-            class="fas fa-heart floating-heart"
-            style="left: 20%; animation-delay: 0.5s"
-          ></i>
-          <i
-            class="fas fa-heart floating-heart"
-            style="left: 30%; animation-delay: 1s"
-          ></i>
-          <i
-            class="fas fa-heart floating-heart"
-            style="left: 70%; animation-delay: 1.5s"
-          ></i>
-          <i
-            class="fas fa-heart floating-heart"
-            style="left: 80%; animation-delay: 2s"
-          ></i>
-          <i
-            class="fas fa-heart floating-heart"
-            style="left: 90%; animation-delay: 2.5s"
-          ></i>
+      <div class="relative w-32 h-32 mx-auto mb-8">
+        <div class="absolute inset-0 flex items-center justify-center">
+          <i class="fas fa-heart text-6xl text-rosa animate-pulse loading-heart-1"></i>
         </div>
-
-        <div class="w-64 h-2 bg-white/30 rounded-full mx-auto overflow-hidden">
-          <div
-            class="h-full bg-gradient-to-r from-morado via-rosa to-azul-navy rounded-full loading-bar"
-          ></div>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <i class="fas fa-heart text-4xl text-morado animate-pulse loading-heart-2"></i>
+        </div>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <i class="fas fa-heart text-3xl text-azul-navy animate-pulse loading-heart-3"></i>
         </div>
       </div>
+
+      <div class="floating-hearts">
+        <i class="fas fa-heart floating-heart" style="left: 10%; animation-delay: 0s"></i>
+        <i class="fas fa-heart floating-heart" style="left: 20%; animation-delay: 0.5s"></i>
+        <i class="fas fa-heart floating-heart" style="left: 30%; animation-delay: 1s"></i>
+        <i class="fas fa-heart floating-heart" style="left: 70%; animation-delay: 1.5s"></i>
+        <i class="fas fa-heart floating-heart" style="left: 80%; animation-delay: 2s"></i>
+        <i class="fas fa-heart floating-heart" style="left: 90%; animation-delay: 2.5s"></i>
+      </div>
+
+      <div class="w-64 h-2 bg-white/30 rounded-full mx-auto overflow-hidden">
+        <div class="h-full bg-gradient-to-r from-morado via-rosa to-azul-navy rounded-full loading-bar"></div>
+      </div>
     </div>
+  </div>
 
-    <div id="mainContent" class="hidden">
-      <section
-        class="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50"
-      >
-        <div class="text-center max-w-4xl mx-auto px-6">
-          <div
-            class="bg-white/80 backdrop-blur-sm rounded-3xl p-12 shadow-2xl border border-purple-100"
-          >
-            <h1
-              class="text-6xl font-bold bg-gradient-to-r from-morado via-rosa to-azul-navy bg-clip-text text-transparent mb-8"
-            >
-              Para Anahí❤️
-            </h1>
-            <div class="prose prose-lg mx-auto text-gray-700 leading-relaxed">
-              <p class="text-xl mb-6">
-                Bueno, queria crear algo quizas mas unico. La verdad, estos 6
-                meses que llevamos de conocerlos, para mi han sido los mejores,
-                no crei que este ano llegara a enamorarme, y ame como conecte
-                con usted mujer. he apendido muchas cosas y tu me has ensenado
-                muchas otras, y al final me has hecho mejorar como persona y me
-                ensenaste a ver muchas cosas desde otro punto de vista. La
-                verdad estoy muy feliz de estar con usted, y quiero hacerla
-                feliz, asi como tu hiciste conmigo, quiero conocer lugares que
-                no he ido con usted, quiero aprender nuevas cosas con usted y
-                quiero seguir con usted. Muy resumido, quiero tratar de hacera
-                feliz, asi como tu hicistee conmigo y que sepas que eres
-                especial para mi.Acabo escribire cositas que me gustan de ti
-                jeje.
+  <div id="mainContent" class="hidden">
+    <section class="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50">
+      <div class="text-center max-w-4xl mx-auto px-6">
+        <div class="bg-white/80 backdrop-blur-sm rounded-3xl p-12 shadow-2xl border border-purple-100">
+          <h1
+            class="text-6xl font-bold bg-gradient-to-r from-morado via-rosa to-azul-navy bg-clip-text text-transparent mb-8">
+            Para Anahí❤️
+          </h1>
+          <div class="prose prose-lg mx-auto text-gray-700 leading-relaxed">
+            <p class="text-xl mb-6"> Bueno, queria crear algo quizas mas unico. La verdad, estos 6 meses que llevamos de
+              conocernos para mi han sido los mejores. No creí que este año llegaría a enamorarme, y ame como conecte
+              con usted mujer. He aprendido muchas cosas y tu me has enseñado muchas otras. Al final, me has ayudado a
+              mejorar como persona y me enseñaste a ver muchas cosas desde otro punto de vista. La verdad estoy muy
+              feliz de estar con usted y quiero hacerte feliz, así como tu lo hiciste conmigo. Quiero conocer lugares
+              que no he ido con usted,tambien repedir lugares donde nos gusto estar, quiero aprender cosas nuevas con usted, quiero seguir contigo. Muy resumido,
+              quiero tratar de hacerla feliz, así como tu lo hiciste conmigo, y que sepas que eres muy especial para mí.
+              Ahora, voy a escribir algunas cositas que me gustan de ti, jeje. </p>
+            <p class="text-lg text-morado font-medium">
+              Hoy cumplimos 6 meses de que la mujer mas hermosa me ligara por
+              insta. Me has hecho muy feliz estos 6 meses.
+            </p>
+          </div>
+          <div class="mt-8 flex justify-center space-x-3">
+            <i class="fas fa-heart text-rosa text-3xl animate-pulse"></i>
+            <i class="fas fa-heart text-morado text-3xl animate-pulse" style="animation-delay: 0.2s"></i>
+            <i class="fas fa-heart text-azul-navy text-3xl animate-pulse" style="animation-delay: 0.4s"></i>
+            <i class="fas fa-heart text-rosa text-3xl animate-pulse" style="animation-delay: 0.6s"></i>
+            <i class="fas fa-heart text-morado text-3xl animate-pulse" style="animation-delay: 0.8s"></i>
+            <i class="fas fa-heart text-azul-navy text-3xl animate-pulse" style="animation-delay: 1s"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="order-2 md:order-1">
+            <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8">
+              <h2 class="text-3xl font-bold text-morado mb-6">
+                Numberrr onee
+              </h2>
+              <p class="text-gray-700 text-lg leading-relaxed">
+                Tu sonrisa, me encanta cuando sonríes, cuando te ríes es demasiado hermoso ver su sonrisa de lado a
+                lado,
+                le queda top. Esa hermosa sonrisa con sus labios todos lindossss y cuando sonries tu carita cambia.
+                Siempre sonríe amor, que de verdad es
+                linda tu sonrisa.
               </p>
-              <p class="text-lg text-morado font-medium">
-                Hoy cumplimos 6 meses de que la mujer mas hermosa me ligara por
-                insta.
-              </p>
-            </div>
-            <div class="mt-8 flex justify-center space-x-3">
-              <i class="fas fa-heart text-rosa text-3xl animate-pulse"></i>
-              <i
-                class="fas fa-heart text-morado text-3xl animate-pulse"
-                style="animation-delay: 0.2s"
-              ></i>
-              <i
-                class="fas fa-heart text-azul-navy text-3xl animate-pulse"
-                style="animation-delay: 0.4s"
-              ></i>
-              <i
-                class="fas fa-heart text-rosa text-3xl animate-pulse"
-                style="animation-delay: 0.6s"
-              ></i>
-              <i
-                class="fas fa-heart text-morado text-3xl animate-pulse"
-                style="animation-delay: 0.8s"
-              ></i>
-              <i
-                class="fas fa-heart text-azul-navy text-3xl animate-pulse"
-                style="animation-delay: 1s"
-              ></i>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-          <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div class="order-2 md:order-1">
-              <div
-                class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8"
-              >
-                <h2 class="text-3xl font-bold text-morado mb-6">
-                  Numberrr onee
-                </h2>
-                <p class="text-gray-700 text-lg leading-relaxed">
-                  Tu sonrisa, me encanta cuando sonries,cuando te ries es
-                  demasiado hermoso ver su sonrisa de lado a lado, le queda top.
-                  esa hermosa sonrisa con sus labios todos lindoss. Siempre
-                  sonria amor, que de verdad es linda.
-                </p>
-              </div>
-            </div>
-            <div class="order-1 md:order-2">
-              <div class="relative">
-                <img
-                  src="/img/1.jpeg"
-                  alt="Sonrisa"
-                  class="rounded-2xl shadow-2xl w-full h-80 object-cover border-4 border-rosa/20"
-                />
-                <div    
-                  class="absolute -top-4 -right-4 bg-rosa text-white p-3 rounded-full"
-                >
-                  <i class="fas fa-smile text-2xl"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="py-20 bg-gradient-to-r from-blue-50 to-purple-50">
-        <div class="max-w-7xl mx-auto px-6">
-          <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="order-1 md:order-2">
             <div class="relative">
-              <img
-                src="/img/2.jpeg"
-                alt="Nuestros momentos"
-                class="rounded-2xl shadow-2xl w-full h-80 object-cover border-4 border-azul-navy/20"
-              />
-              <div
-                class="absolute -top-4 -left-4 bg-azul-navy text-white p-3 rounded-full"
-              >
-                <i class="fas fa-heart text-2xl"></i>
-              </div>
-            </div>
-            <div>
-              <div
-                class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg"
-              >
-                <h2 class="text-3xl font-bold text-azul-navy mb-6">
-                  Numberrr two
-                </h2>
-                <p class="text-gray-700 text-lg leading-relaxed">
-                  Tu personalidad, lo que me enamoro de usted mujer.Como eres de
-                  genuina, divertida, seria, enojona, graciosa, diva,
-                  simplemente usted. Lo que mas me encanto es su forma de
-                  ser,cuando la veia en la U con esa mirada de seriedad, pero
-                  cuando le hablaba ya eras tu, sonriente, carismatica,a veces
-                  con verguenza cuando me le quedaba viendo. Usted es muy linda
-                  mujer, su personalidad es unica, nunca la cambies por nada,
-                  asi eres perfecta.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-          <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div class="order-2 md:order-1">
-              <div
-                class="bg-gradient-to-br from-pink-50 to-purple-50 rounded-2xl p-8"
-              >
-                <h2 class="text-3xl font-bold text-rosa mb-6">
-                  Numeroooo tree
-                </h2>
-                <p class="text-gray-700 text-lg leading-relaxed">
-                  Tu belleza,usted es una mujer hermosa,bella,todo le queda
-                  perfecto, te vez hermosa sin maquillaje, su carita es
-                  perfecta, su piel, su pelo, su bello abdomen y el lunar de su
-                  espaldaa que siempre me encanto, sus piesss jeje. Usted es
-                  bella mujer de verdad, nunca dudes de eso.
-                </p>
-              </div>
-            </div>
-            <div class="order-1 md:order-2">
-              <div class="relative">
-                <img
-                  src="/img/3.jpeg"
-                  alt="Tu mirada"
-                  class="rounded-2xl shadow-2xl w-full h-80 object-cover border-4 border-morado/20"
-                />
-                <div
-                  class="absolute -top-4 -right-4 bg-rosa text-white p-3 rounded-full"
-                >
-                  <i class="fas fa-eye text-2xl"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="py-20 bg-gradient-to-r from-purple-50 to-blue-50">
-        <div class="max-w-7xl mx-auto px-6">
-          <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div class="relative">
-              <img
-                src="/img/4.jpeg"
-                alt="Bailando juntos"
+              <img src="/img/1.jpeg" alt="Sonrisa"
                 class="rounded-2xl shadow-2xl w-full h-80 object-cover border-4 border-rosa/20"
-              />
-              <div
-                class="absolute -top-4 -left-4 bg-rosa text-white p-3 rounded-full"
-              >
-                <i class="fas fa-music text-2xl"></i>
-              </div>
-            </div>
-            <div>
-              <div
-                class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg"
-              >
-                <h2 class="text-3xl font-bold text-morado mb-6">
-                  fourttt
-                </h2>
-                <p class="text-gray-700 text-lg leading-relaxed">
-                Los momentos con usted son los mejores, siempre que nos vemos es divertido, me haces feliz cuando la veo,
-                se me olvida todo lo que tengo el la mente, cuando vemos peliculas y lo que menos quiero es ver la pelicula y verla
-                a usted.Nunca me gusto ver peliculas y ahora me encanta porque lo hago con usted, las salidas a comer, me gusta conocer lugares nuevos donde ir
-                a comer, probar comidas,que la primera fiesta de cumple me la hayas dado tu. me gusta que todos estos momentos compartidos sean con usted y espero que tengamos muchos mas.
-                </p>
+                style="object-position: top;" />
+              <div class="absolute -top-4 -right-4 bg-rosa text-white p-3 rounded-full">
+                <i class="fas fa-smile text-2xl"></i>
               </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-          <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div class="order-2 md:order-1">
-              <div
-                class="bg-gradient-to-br from-blue-50 to-pink-50 rounded-2xl p-8"
-              >
-                <h2 class="text-3xl font-bold text-azul-navy mb-6">
-                  Adivinanza
-                </h2>
-                <p class="text-gray-700 text-lg leading-relaxed">
-                  Es algo muy hermoso, suave y 
-                </p>
-              </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-gradient-to-r from-blue-50 to-purple-50">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="relative">
+            <img src="/img/2.jpeg" alt="Nuestros momentos"
+              class="rounded-2xl shadow-2xl w-full h-80 object-cover border-4 border-azul-navy/20" />
+            <div class="absolute -top-4 -left-4 bg-azul-navy text-white p-3 rounded-full">
+              <i class="fas fa-heart text-2xl"></i>
             </div>
-            <div class="order-1 md:order-2">
-              <div class="relative">
-                <img
-                  src="/img/5.jpeg"
-                  alt="Nuestros sueños"
-                  class="rounded-2xl shadow-2xl w-full h-80 object-cover border-4 border-azul-navy/20"
-                />
-                <div
-                  class="absolute -top-4 -right-4 bg-azul-navy text-white p-3 rounded-full"
-                >
-                  <i class="fas fa-star text-2xl"></i>
-                </div>
-              </div>
+          </div>
+          <div>
+            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+              <h2 class="text-3xl font-bold text-azul-navy mb-6">
+                Numberrr two
+              </h2>
+              <p class="text-gray-700 text-lg leading-relaxed"> Tu personalidad, lo que me enamoro de usted mujer. Como
+                eres de genuina, divertida, seria, enojona, graciosa, diva, simplemente usted. Lo que mas me encanto es
+                su forma de ser. Cuando la veía en la U, con esa mirada de seriedad, pero cuando le hablaba, ya eras tu,
+                sonriente, carismatica, a veces con vergüenza cuando me le quedaba viendo. Usted es muy linda mujer. Su
+                personalidad es unica, nunca la cambies por nada, así eres perfecta. </p>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="py-20 bg-gradient-to-r from-pink-50 to-purple-50">
-        <div class="max-w-7xl mx-auto px-6">
-          <div class="grid md:grid-cols-2 gap-12 items-center">
+    <section class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="order-2 md:order-1">
+            <div class="bg-gradient-to-br from-pink-50 to-purple-50 rounded-2xl p-8">
+              <h2 class="text-3xl font-bold text-rosa mb-6">
+                Numeroooo tree
+              </h2>
+              <p class="text-gray-700 text-lg leading-relaxed">
+                Tu belleza, usted es una mujer hermosa, bella, todo le queda perfecto. Te ves hermosa sin maquillaje, su
+                carita es perfecta, su piel toda sueavecita , su pelo hermoso olor a Anahí, su bello abdomen y el lunar de su
+                espalda que siempre me encanto, sus cachetitos hermosos, sus labios rosas, su nariz toda bellaa, su lunarcito encima del labio, sus cejas perfectas 
+                sus pies hermososjeje, sus manitas suaves, su olor, que tu no lo hueles, pero hueles rico.
+                Usted es bella, mujer, de verdad, nunca dudes de eso.
+              </p>
+            </div>
+          </div>
+          <div class="order-1 md:order-2">
             <div class="relative">
-              <img
-                src="/placeholder.svg?height=400&width=500"
-                alt="Para siempre"
-                class="rounded-2xl shadow-2xl w-full h-80 object-cover border-4 border-morado/20"
-              />
-              <div
-                class="absolute -top-4 -left-4 bg-morado text-white p-3 rounded-full"
-              >
-                <i class="fas fa-infinity text-2xl"></i>
-              </div>
-            </div>
-            <div>
-              <div
-                class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg"
-              >
-                <h2 class="text-3xl font-bold text-rosa mb-6">Adivinanza</h2>
-                <p class="text-gray-700 text-lg leading-relaxed">
-                  
-                </p>
+              <img src="/img/3.jpeg" alt="Tu mirada"
+                class="rounded-2xl shadow-2xl w-full h-80 object-cover border-4 border-morado/20" />
+              <div class="absolute -top-4 -right-4 bg-rosa text-white p-3 rounded-full">
+                <i class="fas fa-clock text-2xl"></i>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section
-        class="py-20 bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100"
-      >
-        <div class="max-w-4xl mx-auto px-6 text-center">
-          <divx
-            class="bg-white/90 backdrop-blur-sm rounded-3xl p-12 shadow-2xl border border-purple-200"
-          >
-            <h2
-              class="text-5xl font-bold bg-gradient-to-r from-morado via-rosa to-azul-navy bg-clip-text text-transparent mb-8"
-            >
-              
-            </h2>
-            <div class="prose prose-xl mx-auto text-gray-700 mb-8">
-              <p class="text-2xl leading-relaxed mb-6">
-                Mujer, esta cancion expresa lo que es usted para mi, y lo que
-                siento. Cada vez que la escuches, quiero que sepas lo que eres
-                para mi y quiero que sea nuestra.
-              </p>
-              <p class="text-lg text-morado font-medium mb-8">
-                Espero te guste, porque desde que la escuche sabia que solo una
-                vez la dedicaria en la life.
+    <section class="py-20 bg-gradient-to-r from-purple-50 to-blue-50">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="relative">
+            <img src="/img/4.jpeg" alt="Bailando juntos"
+              class="rounded-2xl shadow-2xl w-full h-80 object-cover border-4 border-rosa/20" />
+            <div class="absolute -top-4 -left-4 bg-rosa text-white p-3 rounded-full">
+              <i class="fas fa-laugh text-2xl"></i>
+            </div>
+          </div>
+          <div>
+            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+              <h2 class="text-3xl font-bold text-morado mb-6">
+                fourttt
+              </h2>
+              <p class="text-gray-700 text-lg leading-relaxed">
+                Los momentos con usted son los mejores. Siempre que nos vemos es divertido, me haces feliz cuando la
+                veo, se me olvida todo lo que tengo en la mente. Cuando vemos películas, lo que menos quiero es ver la
+                película, sino verla usted. Nunca me gusto ver películas y ahora me encanta porque lo hago con usted.
+                Las salidas a comer, al parquecito, en la U. Me gusta conocer lugares nuevos donde ir a comer, probar
+                comidas, y que la primera fiesta de cumpleaños me la hayas dado tú. Me gusta que todos estos momentos
+                hayan sido con usted y espero que tengamos muchos más. No me arrepiento de nadaaaa.
               </p>
             </div>
-            <div
-              class="bg-gradient-to-r from-morado/10 to-rosa/10 rounded-2xl p-8 mb-8"
-            >
-              <div class="flex items-center justify-center mb-6">
-                <button
-                  id="playButton"
-                  class="bg-gradient-to-r from-morado to-rosa text-white px-8 py-4 rounded-full text-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center space-x-3"
-                >
-                  <i class="fas fa-play" id="playIcon"></i>
-                  <span id="buttonText">Reproducir</span>
-                </button>
-              </div>
-              <p
-                id="songName"
-                class="text-sm text-gray-600 text-center blur-sm transition-all duration-500"
-              >
-                <i class="fas fa-music text-rosa mr-2"></i>
-                Chino & Nacho - Niña Bonita
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="order-2 md:order-1">
+            <div class="bg-gradient-to-br from-blue-50 to-pink-50 rounded-2xl p-8">
+              <h2 class="text-3xl font-bold text-azul-navy mb-6">
+                Numero 5
+              </h2>
+              <p class="text-gray-700 text-lg leading-relaxed">
+                La vez que me sorprendiste, la verdad fue algo que no me esperaba y me sorprendio demasiado. Me hiciste
+                muy feliz ese dia. Fue muy bonito que tu y tu familia se tomaran el tiempo para hacerme algo así, es
+                algo que siempre voy a recordar. Me encanto pasar mi cumpleaños con ustedes, y los hermosos regalos que
+                me diste, aparteee el budín 100/100
+
+                Bueno, al principio dije que escribiría algunas cosas que me gustan de ti. Pues, en resumen, me gusto
+                pasarlo la mujer mas hermosaa,
               </p>
+            </div>
+          </div>
+          <div class="order-1 md:order-2">
+            <div class="relative">
+              <img src="/img/5.jpeg" alt="Nuestros sueños"
+                class="rounded-2xl shadow-2xl w-full h-80 object-cover border-4 border-azul-navy/20" />
+              <div class="absolute -top-4 -right-4 bg-azul-navy text-white p-3 rounded-full">
+                <i class="fas fa-star text-2xl"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-gradient-to-r from-pink-50 to-purple-50">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="relative">
+            <img src="/img/6.1.jpeg" alt="Para siempre"
+              class="rounded-2xl shadow-2xl w-full h-80 object-cover border-4 border-morado/20" />
+            <div class="absolute -top-4 -left-4 bg-morado text-white p-3 rounded-full">
+              <i class="fas fa-infinity text-2xl"></i>
+            </div>
+          </div>
+          <div>
+            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+              <h2 class="text-3xl font-bold text-rosa mb-6">Adivinanza</h2>
+              <p class="text-gray-700 text-lg leading-relaxed">
+              <p class="text-gray-700 text-lg leading-relaxed">
+                Tiene 6 y 5 letras, son dos nombres, luego son dos colores, uno tiene 5 letras y el otro 4.
+                La suma de esas letras son 20. 20-20=0. Ahora tenemos a π = 3.14 y a √4 =2, juntamos esto y
+                nos da 5.14, redondeado es 5. Nuestra Palabra tiene 5 letras, que palabra es?
+              </p>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100">
+      <div class="max-w-4xl mx-auto px-6 text-center">
+        <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-12 shadow-2xl border border-purple-200">
+          <h2
+            class="text-5xl font-bold bg-gradient-to-r from-morado via-rosa to-azul-navy bg-clip-text text-transparent mb-8">
+            Le dedico esta cancion mujer,loviu
+          </h2>
+          <div class="prose prose-xl mx-auto text-gray-700 mb-8">
+            <p class="text-2xl leading-relaxed mb-6">
+              Mujer, esta cancion expresa lo que es usted para mi, y lo que
+              siento. Cada vez que la escuches, quiero que sepas lo que eres
+              para mi y quiero que sea nuestra.
+            </p>
+            <p class="text-lg text-morado font-medium mb-8">
+              Espero le guste, porque desde que la escuche sabia que solo una
+              vez la dedicaria en esta life. </p>
+          </div>
+
+          <div class="bg-gradient-to-r from-morado/10 to-rosa/10 rounded-2xl p-8 mb-8">
+            <div class="flex items-center justify-center mb-6">
+              <button id="playButton"
+                class="bg-gradient-to-r from-morado to-rosa text-white px-8 py-4 rounded-full text-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center space-x-3">
+                <i class="fas fa-play" id="playIcon"></i>
+                <span id="buttonText">Reproducir</span>
+              </button>
+            </div>
+            <p id="songName" class="text-sm text-gray-600 text-center blur-sm transition-all duration-500">
+              <i class="fas fa-music text-rosa mr-2"></i>
+              Chino & Nacho - Niña Bonita
+            </p>
+          </div>
+
+          <div class="flex justify-center space-x-3 text-4xl">
+            <i class="fas fa-heart text-rosa animate-pulse"></i>
+            <i class="fas fa-heart text-morado animate-pulse" style="animation-delay: 0.2s"></i>
+            <i class="fas fa-heart text-azul-navy animate-pulse" style="animation-delay: 0.4s"></i>
+            <i class="fas fa-heart text-rosa animate-pulse" style="animation-delay: 0.6s"></i>
+            <i class="fas fa-heart text-morado animate-pulse" style="animation-delay: 0.8s"></i>
+            <i class="fas fa-heart text-azul-navy animate-pulse" style="animation-delay: 1s"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="py-16 bg-gradient-to-r from-purple-50 via-pink-50 to-blue-50">
+      <div class="max-w-2xl mx-auto px-6 text-center">
+        <div class="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-purple-100">
+          <h3
+            class="text-3xl font-bold bg-gradient-to-r from-morado via-rosa to-azul-navy bg-clip-text text-transparent mb-6">
+            Tiempo que ha pasado desde que me ligaste por primera vez.
+          </h3>
+          <div id="relationshipTimer" class="grid grid-cols-2 gap-6 text-center max-w-sm mx-auto mb-6">
+            <div class="bg-gradient-to-br from-rosa/20 to-morado/20 rounded-xl p-4 shadow-lg">
+              <div id="months" class="text-4xl font-bold text-rosa mb-2">
+                0
+              </div>
+              <div class="text-sm text-gray-600 font-medium">Meses</div>
+            </div>
+            <div class="bg-gradient-to-br from-azul-navy/20 to-morado/20 rounded-xl p-4 shadow-lg">
+              <div id="days" class="text-4xl font-bold text-azul-navy mb-2">
+                0
+              </div>
+              <div class="text-sm text-gray-600 font-medium">Días</div>
+            </div>
+          </div>
+          <p class="text-sm text-morado font-medium italic">
+            <i class="fas fa-calendar-heart text-rosa mr-2"></i>
+            Dia que me ligaste "15 de marzo de 2025"
+          </p>
+          <div class="mt-6 flex justify-center space-x-2">
+            <i class="fas fa-heart text-rosa text-xl animate-pulse"></i>
+            <i class="fas fa-heart text-morado text-xl animate-pulse" style="animation-delay: 0.3s"></i>
+            <i class="fas fa-heart text-azul-navy text-xl animate-pulse" style="animation-delay: 0.6s"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-gradient-to-br from-pink-100 via-purple-50 to-blue-100 min-h-screen flex items-center">
+      <div class="max-w-6xl mx-auto px-6 text-center">
+        <div class="mb-12">
+          <h1
+            class="text-8xl md:text-9xl font-bold bg-gradient-to-r from-rosa via-morado to-azul-navy bg-clip-text text-transparent mb-8 animate-pulse">
+            TE AAMOOO
+          </h1>
+          <p class="text-2xl text-gray-700 font-medium">
+            Con todo mi heart,hice esto, espero le haya gustado.
+          </p>
+        </div>
+
+        <div class="flex justify-center items-center space-x-8 mb-12">
+          <div class="text-6xl text-rosa animate-bounce" style="animation-delay: 0s">
+            🌹
+          </div>
+          <div class="text-5xl text-morado animate-bounce" style="animation-delay: 0.2s">
+            🌸
+          </div>
+          <div class="text-6xl text-azul-navy animate-bounce" style="animation-delay: 0.4s">
+            🌺
+          </div>
+          <div class="text-5xl text-rosa animate-bounce" style="animation-delay: 0.6s">
+            🌷
+          </div>
+          <div class="text-6xl text-morado animate-bounce" style="animation-delay: 0.8s">
+            🌻
+          </div>
+        </div>
+
+        <div class="relative w-80 h-80 mx-auto">
+          <div class="absolute top-0 left-1/2 transform -translate-x-1/2 text-4xl text-rosa animate-spin"
+            style="animation-duration: 10s">
+            🌹
+          </div>
+          <div class="absolute top-1/4 right-0 text-3xl text-morado animate-spin"
+            style="animation-duration: 12s; animation-delay: 1s">
+            🌸
+          </div>
+          <div class="absolute bottom-1/4 right-0 text-4xl text-azul-navy animate-spin"
+            style="animation-duration: 8s; animation-delay: 2s">
+            🌺
+          </div>
+          <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <i class="fas fa-heart text-6xl text-rosa animate-pulse"></i>
+          </div>
+          <div class="absolute bottom-1/4 left-0 text-4xl text-rosa animate-spin"
+            style="animation-duration: 11s; animation-delay: 4s">
+            🌷
+          </div>
+          <div class="absolute top-1/4 left-0 text-3xl text-morado animate-spin"
+            style="animation-duration: 9s; animation-delay: 5s">
+            🌼
+          </div>
+        </div>
+
+        <div class="mt-12">
+          <p class="text-lg text-gray-600 italic">
+            Plantadas en las lineas 366,369,372,375,378,386,389,393,400,404,espero le gusten bby, me costo mucho cosecharlas.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
+      <div class="max-w-4xl mx-auto px-6 text-center">
+        <div class="mb-8">
+          <button id="secretButton"
+            class="bg-gradient-to-r from-morado via-rosa to-azul-navy text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center space-x-3 mx-auto">
+            <i class="fas fa-heart"></i>
+            <span>Presionelo si me amas nada mas. </span>
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+
+        <div id="hiddenSection" class="hidden transform transition-all duration-1000 ease-in-out">
+          <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-12 shadow-2xl border border-purple-200">
+            <h2
+              class="text-4xl font-bold bg-gradient-to-r from-morado via-rosa to-azul-navy bg-clip-text text-transparent mb-8">
+              Obveoooooo,lo que mas amo,perooo amo de ti
+            </h2>
+
+            <div class="prose prose-xl mx-auto text-gray-700 mb-8">
+              <p class="text-2xl leading-relaxed mb-6 text-morado font-medium">
+                SUS OJITOSSSS DIOSSS
+              </p>
+              <p class="text-lg mb-8">
+                Siempre dire que tus ojos es lo que mas resalta de usted.
+                Su mirada toda tierna, a veces una mirada enojona, otras veces de agotada, pero
+                a pesar de eso, siempre se los veo, se ven lindos, cuando los veo, honestamente me pone feliz, me genera
+                paz,
+                De corazon mujer, cuida ese brillo que destacan tus ojitos, siempre amare mirada que me hiciste que me
+                dejo enganchado.
+                Son bellos, lindos, hermosos, preciosos,perfectos divinos, dulces, calidos y obveoo, tambien sexys, que siempre que me miras fijo me derrito .
+                La verdad mujer, yo quiero la quiero tener siempre en mi vida, la amo mucho. Espero haberle sacado una sonrisa con esto. La quiero,te quiero, la amo, Loviu y te amo.
+              </p>
+            </div>
+
+            <div class="relative max-w-md mx-auto mb-8">
+              <img src="/img/6.png" alt="Tus hermosos ojitos"
+                class="tall-image rounded-2xl shadow-2xl border-4 border-gradient-to-r from-morado to-rosa">
+              <div class="absolute -top-4 -right-4 bg-rosa text-white p-3 rounded-full">
+                <i class="fas fa-heart text-2xl animate-pulse"></i>
+              </div>
+              <div class="absolute -bottom-4 -left-4 bg-morado text-white p-3 rounded-full">
+                <i class="fas fa-eye text-2xl"></i>
+              </div>
             </div>
 
             <div class="flex justify-center space-x-3 text-4xl">
               <i class="fas fa-heart text-rosa animate-pulse"></i>
-              <i
-                class="fas fa-heart text-morado animate-pulse"
-                style="animation-delay: 0.2s"
-              ></i>
-              <i
-                class="fas fa-heart text-azul-navy animate-pulse"
-                style="animation-delay: 0.4s"
-              ></i>
-              <i
-                class="fas fa-heart text-rosa animate-pulse"
-                style="animation-delay: 0.6s"
-              ></i>
-              <i
-                class="fas fa-heart text-morado animate-pulse"
-                style="animation-delay: 0.8s"
-              ></i>
-              <i
-                class="fas fa-heart text-azul-navy animate-pulse"
-                style="animation-delay: 1s"
-              ></i>
+              <i class="fas fa-heart text-morado animate-pulse" style="animation-delay: 0.2s"></i>
+              <i class="fas fa-heart text-azul-navy animate-pulse" style="animation-delay: 0.4s"></i>
+              <i class="fas fa-heart text-rosa animate-pulse" style="animation-delay: 0.6s"></i>
+              <i class="fas fa-heart text-morado animate-pulse" style="animation-delay: 0.8s"></i>
+              <i class="fas fa-heart text-azul-navy animate-pulse" style="animation-delay: 1s"></i>
             </div>
           </div>
         </div>
-      </section>
-      <section
-        class="py-16 bg-gradient-to-r from-purple-50 via-pink-50 to-blue-50"
-      >
-        <div class="max-w-2xl mx-auto px-6 text-center">
-          <div
-            class="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-purple-100"
-          >
-            <h3
-              class="text-3xl font-bold bg-gradient-to-r from-morado via-rosa to-azul-navy bg-clip-text text-transparent mb-6"
-            >
-              Tiempo que ha pasadp desde que me ligaste por primera vez un 15 de marzo.
-            </h3>
-            <div
-              id="relationshipTimer"
-              class="grid grid-cols-2 gap-6 text-center max-w-sm mx-auto mb-6"
-            >
-              <div
-                class="bg-gradient-to-br from-rosa/20 to-morado/20 rounded-xl p-4 shadow-lg"
-              >
-                <div id="months" class="text-4xl font-bold text-rosa mb-2">
-                  0
-                </div>
-                <div class="text-sm text-gray-600 font-medium">Meses</div>
-              </div>
-              <div
-                class="bg-gradient-to-br from-azul-navy/20 to-morado/20 rounded-xl p-4 shadow-lg"
-              >
-                <div id="days" class="text-4xl font-bold text-azul-navy mb-2">
-                  0
-                </div>
-                <div class="text-sm text-gray-600 font-medium">Días</div>
-              </div>
-            </div>
-            <p class="text-sm text-morado font-medium italic">
-              <i class="fas fa-calendar-heart text-rosa mr-2"></i>
-              Desde el 15 de marzo de 2025
-            </p>
-            <div class="mt-6 flex justify-center space-x-2">
-              <i class="fas fa-heart text-rosa text-xl animate-pulse"></i>
-              <i
-                class="fas fa-heart text-morado text-xl animate-pulse"
-                style="animation-delay: 0.3s"
-              ></i>
-              <i
-                class="fas fa-heart text-azul-navy text-xl animate-pulse"
-                style="animation-delay: 0.6s"
-              ></i>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
+    </section>
+  </div>
 
-      <section
-        class="py-20 bg-gradient-to-br from-pink-100 via-purple-50 to-blue-100 min-h-screen flex items-center"
-      >
-        <div class="max-w-6xl mx-auto px-6 text-center">
-          <div class="mb-12">
-            <h1
-              class="text-8xl md:text-9xl font-bold bg-gradient-to-r from-rosa via-morado to-azul-navy bg-clip-text text-transparent mb-8 animate-pulse"
-            >
-              TE AAMOOO
-            </h1>
-            <p class="text-2xl text-gray-700 font-medium">
-              Con todo mi heart,hice esto, espero le haya gustado.
-            </p>
-          </div>
+  <audio id="backgroundMusic" preload="metadata">
+    <source src="/music/Chino & Nacho - Niña Bonita - ChinoNachoVEVO.mp3" type="audio/mpeg" />
+    Tu navegador no soporta el elemento de audio.
+  </audio>
+  <audio id="specialMusic" preload="metadata">
+    <source src="/music/Una Cita.mp3" type="audio/mpeg" />
+    Tu navegador no soporta el elemento de audio.
+  </audio>
+  <script src="js/funcionalidades.js"></script>
+</body>
 
-          <div class="flex justify-center items-center space-x-8 mb-12">
-            <div
-              class="text-6xl text-rosa animate-bounce"
-              style="animation-delay: 0s"
-            >
-              🌹
-            </div>
-            <div
-              class="text-5xl text-morado animate-bounce"
-              style="animation-delay: 0.2s"
-            >
-              🌸
-            </div>
-            <div
-              class="text-6xl text-azul-navy animate-bounce"
-              style="animation-delay: 0.4s"
-            >
-              🌺
-            </div>
-            <div
-              class="text-5xl text-rosa animate-bounce"
-              style="animation-delay: 0.6s"
-            >
-              🌷
-            </div>
-            <div
-              class="text-6xl text-morado animate-bounce"
-              style="animation-delay: 0.8s"
-            >
-              🌻
-            </div>
-          </div>
-
-          <div class="relative w-80 h-80 mx-auto">
-            <div
-              class="absolute top-0 left-1/2 transform -translate-x-1/2 text-4xl text-rosa animate-spin"
-              style="animation-duration: 10s"
-            >
-              🌹
-            </div>
-            <div
-              class="absolute top-1/4 right-0 text-3xl text-morado animate-spin"
-              style="animation-duration: 12s; animation-delay: 1s"
-            >
-              🌸
-            </div>
-            <div
-              class="absolute bottom-1/4 right-0 text-4xl text-azul-navy animate-spin"
-              style="animation-duration: 8s; animation-delay: 2s"
-            >
-              🌺
-            </div>
-            <div
-              class="absolute bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-            >
-              <i class="fas fa-heart text-6xl text-rosa animate-pulse"></i>
-            </div>
-            <div
-              class="absolute bottom-1/4 left-0 text-4xl text-rosa animate-spin"
-              style="animation-duration: 11s; animation-delay: 4s"
-            >
-              🌷
-            </div>
-            <div
-              class="absolute top-1/4 left-0 text-3xl text-morado animate-spin"
-              style="animation-duration: 9s; animation-delay: 5s"
-            >
-              🌼
-            </div>
-          </div>
-
-          <div class="mt-12">
-            <p class="text-lg text-gray-600 italic">
-              "Plantadas en las lineas 505,espero le gusten bby.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section
-        class="py-20 bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50"
-      >
-        <div class="max-w-4xl mx-auto px-6 text-center">
-          <div class="mb-8">
-            <button
-              id="secretButton"
-              class="bg-gradient-to-r from-morado via-rosa to-azul-navy text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center space-x-3 mx-auto"
-            >
-              <i class="fas fa-heart"></i>
-              <span>Presionelo si me amas nada mas. </span>
-              <i class="fas fa-eye"></i>
-            </button>
-          </div>
-
-          <div
-            id="hiddenSection"
-            class="hidden transform transition-all duration-1000 ease-in-out"
-          >
-            <div
-              class="bg-white/90 backdrop-blur-sm rounded-3xl p-12 shadow-2xl border border-purple-200"
-            >
-              <h2
-                class="text-4xl font-bold bg-gradient-to-r from-morado via-rosa to-azul-navy bg-clip-text text-transparent mb-8"
-              >
-                Obveoooooo,lo que mas amo de ti
-              </h2>
-
-              <div class="prose prose-xl mx-auto text-gray-700 mb-8">
-                <p
-                  class="text-2xl leading-relaxed mb-6 text-morado font-medium"
-                >
-                  SUS OJITOSSSS
-                </p>
-                <p class="text-lg mb-8">
-                  Siempre dire que tus ojos es lo que mas resalta de usted.
-                  Su mirada toda tierna, a veces una mirada enojona, otras veces de agotada, pero
-                  a pesar de eso, siempre se los veo, se ven lindos, cuando los veo, honestamente me pone feliz, me genera paz,
-                  De corazon mujer, cuida ese brillo que destacan tus ojitos, siempre amare mirada que me hiciste que me dejo enganchado.
-                  Son bellos, lindos, hermosos, preciosos, divinos, dulces, calidos y obveoo, tambien sexys.
-                </p>
-              </div>
-
-              <div class="relative max-w-md mx-auto mb-8">
-                <img
-                  src="/img/6.png"
-                  alt="Tus hermosos ojitos"
-                  class="rounded-2xl shadow-2xl w-full h-80 object-cover border-4 border-gradient-to-r from-morado to-rosa"
-                />
-                <div
-                  class="absolute -top-4 -right-4 bg-rosa text-white p-3 rounded-full"
-                >
-                  <i class="fas fa-heart text-2xl animate-pulse"></i>
-                </div>
-                <div
-                  class="absolute -bottom-4 -left-4 bg-morado text-white p-3 rounded-full"
-                >
-                  <i class="fas fa-eye text-2xl"></i>
-                </div>
-              </div>
-
-              <div class="flex justify-center space-x-3 text-4xl">
-                <i class="fas fa-heart text-rosa animate-pulse"></i>
-                <i
-                  class="fas fa-heart text-morado animate-pulse"
-                  style="animation-delay: 0.2s"
-                ></i>
-                <i
-                  class="fas fa-heart text-azul-navy animate-pulse"
-                  style="animation-delay: 0.4s"
-                ></i>
-                <i
-                  class="fas fa-heart text-rosa animate-pulse"
-                  style="animation-delay: 0.6s"
-                ></i>
-                <i
-                  class="fas fa-heart text-morado animate-pulse"
-                  style="animation-delay: 0.8s"
-                ></i>
-                <i
-                  class="fas fa-heart text-azul-navy animate-pulse"
-                  style="animation-delay: 1s"
-                ></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <audio id="backgroundMusic" preload="metadata">
-      <source
-        src="/music/Chino & Nacho - Niña Bonita - ChinoNachoVEVO.mp3"
-        type="audio/mpeg"
-      />
-      Tu navegador no soporta el elemento de audio.
-    </audio>
-    <audio id="specialMusic" preload="metadata">
-      <source src="/music/Una Cita.mp3" type="audio/mpeg" />
-      Tu navegador no soporta el elemento de audio.
-    </audio>
-    <script src="js/funcionalidades.js"></script>
-  </body>
 </html>
-
