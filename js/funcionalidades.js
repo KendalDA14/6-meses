@@ -79,11 +79,10 @@ document.getElementById("secretButton").addEventListener("click", function () {
     specialAudio
       .play()
       .then(() => {
-        // Stop music after 20 seconds (from second 5 to 25)
         setTimeout(() => {
           specialAudio.pause();
-          specialAudio.currentTime = 5; // Reset for next time
-        }, 20000);
+          specialAudio.currentTime = 5; 
+        }, 21000);
       })
       .catch((error) => {
         console.error("Error playing special audio:", error);
@@ -101,7 +100,6 @@ document.getElementById("secretButton").addEventListener("click", function () {
     button.innerHTML =
       '<i class="fas fa-heart"></i><span>Ocultar Mensaje</span><i class="fas fa-eye-slash"></i>';
   } else {
-    // Stop special music if playing
     specialAudio.pause();
     specialAudio.currentTime = 5;
 
