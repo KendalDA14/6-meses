@@ -25,21 +25,20 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
 <script>
   var _paq = window._paq = window._paq || [];
-  _paq.push(['disableCookies']);  // evita bloqueos en Safari/Brave
+  _paq.push(['disableCookies']);  
   _paq.push(['trackPageView']);
   _paq.push(['enableLinkTracking']);
   (function() {
-    var u="https://analytics.loviuanahi.space/"; // 👈 tu subdominio
+    var u="https://loviuanahispace.matomo.cloud/";
     _paq.push(['setTrackerUrl', u+'matomo.php']);
-    _paq.push(['setSiteId', '1']); // 👈 el ID de tu sitio
+    _paq.push(['setSiteId', '1']);
     var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
     g.async=true; 
-    g.src=u+'matomo.js'; // 👈 carga matomo.js desde tu subdominio
+    g.src='https://cdn.matomo.cloud/loviuanahispace.matomo.cloud/matomo.js';
     s.parentNode.insertBefore(g,s);
   })();
 </script>
 </head>
-
 <body class="bg-white">
   <div id="loadingScreen"
     class="fixed inset-0 bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 z-50 flex items-center justify-center">
@@ -328,7 +327,6 @@
       </div>
     </section>
 
-
     <section class="py-16 bg-gradient-to-r from-purple-50 via-pink-50 to-blue-50">
       <div class="max-w-2xl mx-auto px-6 text-center">
         <div class="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-purple-100">
@@ -375,6 +373,7 @@
           </p>
         </div>
 
+        
         <div class="flex justify-center items-center space-x-8 mb-12">
           <div class="text-6xl text-rosa animate-bounce" style="animation-delay: 0s">
             🌹
