@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Un a&ntilde;o contigo</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="img/logo/corazon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/logo/corazon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="img/logo/corazon.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            coral: "#FF7A8A",
+            peach: "#FFD2B8",
+            butter: "#FFE79A",
+            jade: "#73D8C1",
+            lagoon: "#2F9D8F",
+            berry: "#C44F87",
+            night: "#1E2444",
+            blush: "#FFF6FB",
+          },
+          boxShadow: {
+            bloom: "0 28px 90px rgba(196, 79, 135, 0.22)",
+            soft: "0 18px 48px rgba(30, 36, 68, 0.14)",
+          },
+        },
+      },
+    };
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(255, 122, 138, 0.18), transparent 27%),
+        radial-gradient(circle at 88% 12%, rgba(115, 216, 193, 0.18), transparent 24%),
+        radial-gradient(circle at 50% 94%, rgba(255, 231, 154, 0.22), transparent 30%),
+        linear-gradient(180deg, #fffaf5 0%, #fff6fb 48%, #f4fffb 100%);
+    }
+
+    .soft-grid {
+      background-image:
+        linear-gradient(90deg, rgba(196, 79, 135, 0.08) 1px, transparent 1px),
+        linear-gradient(rgba(47, 157, 143, 0.08) 1px, transparent 1px);
+      background-size: 36px 36px;
+    }
+
+    .floating-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .floating-token {
+      position: absolute;
+      bottom: -12vh;
+      color: var(--token-color, #C44F87);
+      font-weight: 800;
+      font-size: var(--token-size, 1.1rem);
+      opacity: 0;
+      filter: drop-shadow(0 10px 18px rgba(196, 79, 135, 0.22));
+      white-space: nowrap;
+    }
+
+    .hero-photo,
+    .feature-photo,
+    .memory-card,
+    .video-carousel {
+      will-change: transform;
+    }
+
+    .hero-photo {
+      transform-style: preserve-3d;
+    }
+
+    .photo-panel {
+      perspective: 1600px;
+    }
+
+    .memory-stage {
+      position: relative;
+      height: 32rem;
+      transform-style: preserve-3d;
+      touch-action: pan-y;
+      user-select: none;
+    }
+
+    .memory-card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(62vw, 18rem);
+      aspect-ratio: 4 / 5;
+      transform-style: preserve-3d;
+      transition: opacity 420ms ease, filter 420ms ease;
+      cursor: pointer;
+    }
+
+    .memory-photo {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 1.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.84);
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: 0 24px 70px rgba(30, 36, 68, 0.18);
+      padding: 0.55rem;
+    }
+
+    .memory-photo img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      border-radius: 1.45rem;
+      transition: transform 500ms ease, filter 500ms ease;
+    }
+
+    .memory-card:hover .memory-photo img,
+    .memory-card.is-active .memory-photo img {
+      transform: scale(1.08);
+      filter: saturate(1.08);
+    }
+
+    .memory-card:not(.is-active) {
+      filter: saturate(0.82);
+    }
+
+    .memory-caption {
+      display: none;
+    }
+
+    .memory-modal {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 220ms ease;
+    }
+
+    .memory-modal.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .memory-dialog {
+      transform: translateY(20px) scale(0.96);
+      transition: transform 240ms ease;
+    }
+
+    .memory-modal.is-open .memory-dialog {
+      transform: translateY(0) scale(1);
+    }
+
+    .memory-dialog img {
+      width: 100%;
+      height: min(74vh, 42rem);
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-carousel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 2.4rem;
+      background: #1E2444;
+      box-shadow: 0 28px 90px rgba(196, 79, 135, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .video-carousel video {
+      width: 100%;
+      height: min(74vh, 42rem);
+      min-height: 30rem;
+      object-fit: cover;
+      display: block;
+      background: #1E2444;
+    }
+
+    .video-pill {
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.62);
+      transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+    }
+
+    .video-pill.is-active {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    @media (min-width: 1024px) {
+      .memory-stage {
+        height: 38rem;
+      }
+
+      .memory-card {
+        width: min(23vw, 19rem);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .video-carousel video,
+      .memory-dialog img {
+        min-height: 26rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="text-night">
+  <div id="floatingLayer" class="floating-layer" aria-hidden="true"></div>
+
+  <main class="soft-grid">
+    <header class="relative isolate min-h-screen overflow-hidden">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.68),transparent_38%)]"></div>
+      <div class="relative z-10 max-w-7xl mx-auto px-5 py-8 sm:py-10 lg:min-h-screen lg:flex lg:items-center">
+        <div class="grid w-full gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
+          <div>
+            <a href="index.html"
+              class="hero-chip inline-flex items-center gap-3 rounded-full bg-white/80 backdrop-blur-md px-4 py-2 text-sm font-bold text-night shadow-soft">
+              <i class="fas fa-arrow-left text-berry"></i>
+              Volver
+            </a>
+            <div
+              class="hero-kicker mt-5 inline-flex items-center gap-3 rounded-full bg-white/75 px-4 py-2 text-xs uppercase tracking-[0.24em] text-berry font-bold shadow-soft">
+              <i class="fas fa-heart text-coral"></i>
+              Cap&iacute;tulo 02
+            </div>
+            <h1 class="hero-title mt-6 text-5xl sm:text-6xl lg:text-8xl font-black leading-none">
+              Un a&ntilde;o
+              <span class="block bg-gradient-to-r from-coral via-berry to-lagoon bg-clip-text text-transparent">contigo</span>
+            </h1>
+            <p class="hero-copy mt-6 max-w-xl text-base sm:text-lg leading-8 text-night/70">
+              Tengo algo peque&ntilde;o al principio: gracias por quedarse, por cada risa, por cada salida y por hacer que
+              todo se sintiera m&aacute;s bonito.
+            </p>
+            <div class="hero-actions mt-8 flex flex-wrap gap-3">
+              <a href="#tres-fotos"
+                class="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-coral via-berry to-lagoon px-6 py-3 font-semibold text-white shadow-bloom">
+                <i class="fas fa-images"></i>
+                Bajar
+              </a>
+              <a href="#video"
+                class="inline-flex items-center gap-3 rounded-full bg-white/90 px-6 py-3 font-semibold text-night shadow-soft">
+                <i class="fas fa-film text-lagoon"></i>
+                Video
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-stage relative min-h-[34rem] lg:min-h-[42rem]">
+            <div
+              class="hero-photo absolute left-[4%] top-[6%] w-[44%] max-w-72 rotate-[-8deg] overflow-hidden rounded-[2rem] border border-white/80 bg-white p-2 shadow-bloom">
+              <img src="img/one_year/foto1.jpeg" alt="Recuerdo del primer a&ntilde;o"
+                class="h-80 w-full rounded-[1.55rem] object-cover" />
+            </div>
+            <div
+              class="hero-photo absolute right-[5%] top-[18%] w-[49%] max-w-80 rotate-[6deg] overflow-hidden rounded-[2.2rem] border border-white/80 bg-white p-2 shadow-bloom">
+              <img src="img/one_year/foto8.jpeg" alt="Recuerdo del primer a&ntilde;o"
+                class="h-96 w-full rounded-[1.75rem] object-cover" />
+            </div>
+            <div
+              class="hero-photo absolute left-[20%] bottom-[1%] w-[52%] max-w-80 rotate-[-2deg] overflow-hidden rounded-[2rem] border border-white/80 bg-white p-2 shadow-bloom">
+              <img src="img/one_year/foto12.jpeg" alt="Recuerdo del primer a&ntilde;o"
+                class="h-72 w-full rounded-[1.55rem] object-cover" />
+            </div>
+            <div
+              class="hero-note absolute right-[2%] bottom-[5%] max-w-[14rem] rounded-[1.7rem] bg-night px-5 py-4 text-white shadow-soft">
+              <p class="text-xs uppercase tracking-[0.22em] text-white/60">15 marzo</p>
+              <p class="mt-1 text-2xl font-black text-butter">Un a&ntilde;o</p>
+              <p class="mt-2 text-sm leading-6 text-white/70">y muchas razones para seguir.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="relative max-w-4xl mx-auto px-5 py-16 sm:py-24">
+      <div class="intro-note rounded-[2rem] bg-white/80 backdrop-blur-xl border border-white/80 p-7 sm:p-10 shadow-soft">
+        <p class="text-xs uppercase tracking-[0.28em] text-berry font-bold">Un texto peque&ntilde;o</p>
+        <h2 class="mt-4 text-3xl sm:text-5xl font-black">Esto tambi&eacute;n es una forma de decir te amo.</h2>
+        <p class="mt-5 text-base sm:text-lg leading-8 text-night/70">
+          No quer&iacute;a que esta p&aacute;gina fuera solo fotos. Quer&iacute;a que al bajarla se sintiera como caminar por
+          recuerdos: primero suave, luego m&aacute;s vivo, y al final con algo que se quede sonando bonito.
+        </p>
+      </div>
+    </section>
+
+    <section id="tres-fotos" class="relative max-w-7xl mx-auto px-5 py-16">
+      <div class="section-heading max-w-3xl">
+        <p class="text-xs uppercase tracking-[0.28em] text-lagoon font-bold">Tres momentos</p>
+        <h2 class="mt-4 text-4xl sm:text-6xl font-black">Bajando aparecen una por una.</h2>
+      </div>
+      <div class="mt-10 grid gap-5 md:grid-cols-3">
+        <article class="feature-photo overflow-hidden rounded-[2rem] bg-white p-2 shadow-bloom border border-white/80">
+          <img src="img/one_year/foto3.jpeg" alt="Recuerdo especial"
+            class="h-96 w-full rounded-[1.55rem] object-cover" />
+          <div class="p-4">
+            <p class="text-xs uppercase tracking-[0.22em] text-berry font-bold">01</p>
+            <h3 class="mt-2 text-2xl font-black">Tu sonrisa</h3>
+          </div>
+        </article>
+        <article class="feature-photo overflow-hidden rounded-[2rem] bg-white p-2 shadow-bloom border border-white/80">
+          <img src="img/one_year/foto6.jpeg" alt="Recuerdo especial"
+            class="h-96 w-full rounded-[1.55rem] object-cover" />
+          <div class="p-4">
+            <p class="text-xs uppercase tracking-[0.22em] text-lagoon font-bold">02</p>
+            <h3 class="mt-2 text-2xl font-black">Lo nuestro</h3>
+          </div>
+        </article>
+        <article class="feature-photo overflow-hidden rounded-[2rem] bg-white p-2 shadow-bloom border border-white/80">
+          <img src="img/one_year/foto10.jpeg" alt="Recuerdo especial"
+            class="h-96 w-full rounded-[1.55rem] object-cover" />
+          <div class="p-4">
+            <p class="text-xs uppercase tracking-[0.22em] text-coral font-bold">03</p>
+            <h3 class="mt-2 text-2xl font-black">Seguir</h3>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="panel" class="relative max-w-7xl mx-auto px-5 py-16 sm:py-24">
+      <div class="section-heading mx-auto max-w-3xl text-center">
+        <p class="text-xs uppercase tracking-[0.28em] text-berry font-bold">Galer&iacute;a 3D</p>
+        <h2 class="mt-4 text-4xl sm:text-6xl font-black">Fotos que se abren como recuerdo.</h2>
+        <p class="mt-5 text-base sm:text-lg leading-8 text-night/70">
+          Desliza, usa las flechas o toca una foto. Al tocarla se abre grande con su mensaje encima.
+        </p>
+      </div>
+
+      <div class="photo-panel mt-12 rounded-[2.5rem] bg-white/60 backdrop-blur-xl border border-white/80 p-4 sm:p-6 shadow-bloom">
+        <div>
+            <div class="mb-4 flex items-center justify-between gap-3">
+              <button id="memoryPrev"
+                class="grid h-12 w-12 place-items-center rounded-full bg-white text-night shadow-soft border border-night/10"
+                aria-label="Foto anterior">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <p id="memoryPosition" class="text-sm font-bold text-night/55">01 / 14</p>
+              <button id="memoryNext"
+                class="grid h-12 w-12 place-items-center rounded-full bg-white text-night shadow-soft border border-night/10"
+                aria-label="Foto siguiente">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+
+            <div id="memoryStage" class="memory-stage">
+              <article class="memory-card" data-title="La primera sonrisa"
+                data-text="Hay fotos que no necesitan explicar mucho. Esta abre la galer&iacute;a porque se siente como el inicio de algo bonito."
+                data-tone="coral">
+                <div class="memory-photo">
+                  <img src="img/one_year/foto1.jpeg" alt="Foto del primer a&ntilde;o" />
+                  <div class="memory-caption"><span>Recuerdo 01</span><strong>La primera sonrisa</strong></div>
+                </div>
+              </article>
+              <article class="memory-card" data-title="Tu forma de mirar"
+                data-text="Me gusta cuando una foto se queda con ese detalle: una mirada tranquila, linda, como si todo estuviera bien."
+                data-tone="lagoon">
+                <div class="memory-photo">
+                  <img src="img/one_year/foto2.jpeg" alt="Foto del primer a&ntilde;o" />
+                  <div class="memory-caption"><span>Recuerdo 02</span><strong>Tu forma de mirar</strong></div>
+                </div>
+              </article>
+              <article class="memory-card" data-title="Lo que me gusta de usted"
+                data-text="Su manera de ser, de re&iacute;rse, de hacer que un d&iacute;a normal termine guardado en la mente."
+                data-tone="berry">
+                <div class="memory-photo">
+                  <img src="img/one_year/foto3.jpeg" alt="Foto del primer a&ntilde;o" />
+                  <div class="memory-caption"><span>Recuerdo 03</span><strong>Lo que me gusta</strong></div>
+                </div>
+              </article>
+              <article class="memory-card" data-title="Una salida cualquiera"
+                data-text="Con usted hasta una salida sencilla tiene algo diferente. Eso es lo que quer&iacute;a que se sintiera aqu&iacute;."
+                data-tone="coral">
+                <div class="memory-photo">
+                  <img src="img/one_year/foto4.jpeg" alt="Foto del primer a&ntilde;o" />
+                  <div class="memory-caption"><span>Recuerdo 04</span><strong>Una salida cualquiera</strong></div>
+                </div>
+              </article>
+              <article class="memory-card" data-title="Detalles peque&ntilde;os"
+                data-text="Los detalles peque&ntilde;os son los que m&aacute;s se quedan. Una foto, una risa, una frase, una mirada."
+                data-tone="lagoon">
+                <div class="memory-photo">
+                  <img src="img/one_year/foto5.jpeg" alt="Foto del primer a&ntilde;o" />
+                  <div class="memory-caption"><span>Recuerdo 05</span><strong>Detalles peque&ntilde;os</strong></div>
+                </div>
+              </article>
+              <article class="memory-card" data-title="Lo nuestro"
+                data-text="Esta parte es para todo lo que solo nosotros entendemos. Cosas simples, pero con significado."
+                data-tone="berry">
+                <div class="memory-photo">
+                  <img src="img/one_year/foto6.jpeg" alt="Foto del primer a&ntilde;o" />
+                  <div class="memory-caption"><span>Recuerdo 06</span><strong>Lo nuestro</strong></div>
+                </div>
+              </article>
+              <article class="memory-card" data-title="Un d&iacute;a bonito"
+                data-text="No todo tiene que ser enorme para ser especial. A veces basta con que haya sido con usted."
+                data-tone="coral">
+                <div class="memory-photo">
+                  <img src="img/one_year/foto7.jpeg" alt="Foto del primer a&ntilde;o" />
+                  <div class="memory-caption"><span>Recuerdo 07</span><strong>Un d&iacute;a bonito</strong></div>
+                </div>
+              </article>
+              <article class="memory-card" data-title="Cerca de usted"
+                data-text="Hay fotos que dan ganas de volver a ese momento. Esta se siente as&iacute;, cerquita y tranquila."
+                data-tone="lagoon">
+                <div class="memory-photo">
+                  <img src="img/one_year/foto8.jpeg" alt="Foto del primer a&ntilde;o" />
+                  <div class="memory-caption"><span>Recuerdo 08</span><strong>Cerca de usted</strong></div>
+                </div>
+              </article>
+              <article class="memory-card" data-title="La parte divertida"
+                data-text="Me gusta que con usted tambi&eacute;n haya juego, bromas y esa forma bonita de no tomarlo todo tan serio."
+                data-tone="berry">
+                <div class="memory-photo">
+                  <img src="img/one_year/foto9.jpeg" alt="Foto del primer a&ntilde;o" />
+                  <div class="memory-caption"><span>Recuerdo 09</span><strong>La parte divertida</strong></div>
+                </div>
+              </article>
+              <article class="memory-card" data-title="Seguir eligiendo"
+                data-text="Un a&ntilde;o tambi&eacute;n significa seguir eligiendo, incluso en d&iacute;as cansados. Eso vale mucho."
+                data-tone="coral">
+                <div class="memory-photo">
+                  <img src="img/one_year/foto10.jpeg" alt="Foto del primer a&ntilde;o" />
+                  <div class="memory-caption"><span>Recuerdo 10</span><strong>Seguir eligiendo</strong></div>
+                </div>
+              </article>
+              <article class="memory-card" data-title="Su luz"
+                data-text="Hay algo en usted que siempre resalta. No lo digo por decirlo: se nota, incluso aqu&iacute;."
+                data-tone="lagoon">
+                <div class="memory-photo">
+                  <img src="img/one_year/foto11.jpeg" alt="Foto del primer a&ntilde;o" />
+                  <div class="memory-caption"><span>Recuerdo 11</span><strong>Su luz</strong></div>
+                </div>
+              </article>
+              <article class="memory-card" data-title="Mi favorita de hoy"
+                data-text="Esta podr&iacute;a cambiar cada vez que abra la p&aacute;gina, pero hoy se siente como una favorita."
+                data-tone="berry">
+                <div class="memory-photo">
+                  <img src="img/one_year/foto12.jpeg" alt="Foto del primer a&ntilde;o" />
+                  <div class="memory-caption"><span>Recuerdo 12</span><strong>Mi favorita de hoy</strong></div>
+                </div>
+              </article>
+              <article class="memory-card" data-title="Un pedacito m&aacute;s"
+                data-text="Otro pedacito de este a&ntilde;o. Tal vez peque&ntilde;o, pero suficiente para hacerlo parte de la historia."
+                data-tone="coral">
+                <div class="memory-photo">
+                  <img src="img/one_year/foto13.jpeg" alt="Foto del primer a&ntilde;o" />
+                  <div class="memory-caption"><span>Recuerdo 13</span><strong>Un pedacito m&aacute;s</strong></div>
+                </div>
+              </article>
+              <article class="memory-card" data-title="Todo lo que sigue"
+                data-text="La &uacute;ltima queda mirando hacia adelante: por lo que ya fue, y por todo lo que todav&iacute;a puede venir."
+                data-tone="lagoon">
+                <div class="memory-photo">
+                  <img src="img/one_year/foto14.jpeg" alt="Foto del primer a&ntilde;o" />
+                  <div class="memory-caption"><span>Recuerdo 14</span><strong>Todo lo que sigue</strong></div>
+                </div>
+              </article>
+            </div>
+        </div>
+        <p class="mt-5 text-center text-sm font-bold text-night/55">Toca cualquier foto para abrirla con su texto.</p>
+      </div>
+    </section>
+
+    <section id="video" class="relative max-w-7xl mx-auto px-5 py-16 sm:py-24">
+      <article class="video-section grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
+        <div class="video-carousel">
+          <video id="carouselVideo" controls loop playsinline preload="metadata" poster="img/one_year/foto14.jpeg">
+            <source id="carouselVideoSource" src="img/one_year/video1.mp4" type="video/mp4" />
+          </video>
+          <div class="absolute inset-x-4 top-4 flex items-center justify-between gap-3">
+            <button id="videoPrev"
+              class="grid h-12 w-12 place-items-center rounded-full bg-white/90 text-night shadow-soft"
+              aria-label="Video anterior">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <p id="videoPosition" class="rounded-full bg-night/72 px-4 py-2 text-sm font-bold text-white backdrop-blur-md">01 / 04</p>
+            <button id="videoNext"
+              class="grid h-12 w-12 place-items-center rounded-full bg-white/90 text-night shadow-soft"
+              aria-label="Video siguiente">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="video-copy rounded-[2.2rem] bg-night p-7 sm:p-10 text-white shadow-soft">
+          <p id="videoCounter" class="text-xs uppercase tracking-[0.28em] text-butter font-bold">Video 01</p>
+          <h2 id="videoTitle" class="mt-4 text-4xl sm:text-6xl font-black">Esto se mueve como recuerdo.</h2>
+          <p id="videoText" class="mt-6 text-base sm:text-lg leading-8 text-white/75">
+            Hay cosas que una foto deja quietas, pero un video las vuelve a prender. Este espacio queda para eso:
+            para recordar movimiento, voces, risas, salidas y pedacitos que me hacen pensar en usted.
+          </p>
+          <div class="mt-8 grid grid-cols-4 gap-3">
+            <button class="video-dot video-pill rounded-2xl px-3 py-4 text-sm font-bold" data-video-index="0">01</button>
+            <button class="video-dot video-pill rounded-2xl px-3 py-4 text-sm font-bold" data-video-index="1">02</button>
+            <button class="video-dot video-pill rounded-2xl px-3 py-4 text-sm font-bold" data-video-index="2">03</button>
+            <button class="video-dot video-pill rounded-2xl px-3 py-4 text-sm font-bold" data-video-index="3">04</button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="relative max-w-6xl mx-auto px-5 pb-24">
+      <div
+        class="final-card relative overflow-hidden rounded-[2.6rem] bg-gradient-to-br from-coral via-berry to-lagoon px-7 py-16 sm:px-12 text-center text-white shadow-bloom">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.24),transparent_32%)]"></div>
+        <div class="relative z-10">
+          <p class="text-xs uppercase tracking-[0.28em] text-white/70 font-bold">Siempre</p>
+          <h2 class="mt-4 text-5xl sm:text-7xl font-black">Te amo.</h2>
+          <p class="mt-6 max-w-2xl mx-auto text-base sm:text-lg leading-8 text-white/80">
+            Y si esta p&aacute;gina cambia, crece o se llena de m&aacute;s recuerdos, que sea porque seguimos sumando cosas
+            bonitas.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="memoryModal"
+    class="memory-modal fixed inset-0 z-50 flex items-center justify-center bg-night/82 px-4 py-6 backdrop-blur-md">
+    <div class="memory-dialog relative w-full max-w-4xl overflow-hidden rounded-[2.4rem] bg-night shadow-bloom">
+      <button id="closeMemoryModal"
+        class="absolute right-4 top-4 z-20 grid h-12 w-12 place-items-center rounded-full bg-white text-night shadow-soft"
+        aria-label="Cerrar recuerdo">
+        <i class="fas fa-xmark"></i>
+      </button>
+      <img id="memoryModalImage" src="img/one_year/foto1.jpeg" alt="Foto del primer a&ntilde;o" />
+      <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-night via-night/86 to-transparent p-6 pt-24 sm:p-9 sm:pt-28 text-white">
+        <p id="memoryModalCounter" class="text-xs uppercase tracking-[0.28em] text-butter font-bold">Recuerdo 01</p>
+        <h3 id="memoryModalTitle" class="mt-3 text-3xl sm:text-5xl font-black">La primera sonrisa</h3>
+        <p id="memoryModalText" class="mt-4 max-w-2xl text-base sm:text-lg leading-8 text-white/80">
+          Hay fotos que no necesitan explicar mucho. Esta abre la galer&iacute;a porque se siente como el inicio de algo bonito.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/one_year.js"></script>
+</body>
+
+</html>
