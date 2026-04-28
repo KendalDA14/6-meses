@@ -55,10 +55,19 @@ const memoryModalCounter = document.getElementById("memoryModalCounter");
 const memoryModalTitle = document.getElementById("memoryModalTitle");
 const memoryModalText = document.getElementById("memoryModalText");
 const closeMemoryModalButton = document.getElementById("closeMemoryModal");
+const revealWord = document.getElementById("revealWord");
+const photoStopButton = document.getElementById("photoStopButton");
+const funnyModal = document.getElementById("funnyModal");
+const funnyModalText = document.getElementById("funnyModalText");
+const funnyModalVideo = document.getElementById("funnyModalVideo");
+const funnyModalVideoSource = document.getElementById("funnyModalVideoSource");
+const closeFunnyModalButton = document.getElementById("closeFunnyModal");
 let currentMemory = 0;
 let startX = 0;
 let dragX = 0;
 let isDragging = false;
+let revealClicks = 0;
+let photoStopClicks = 0;
 
 function getMemorySpacing() {
   return window.innerWidth < 720 ? 112 : 168;
@@ -128,6 +137,124 @@ function closeMemoryModal() {
   document.body.style.overflow = "";
 }
 
+if (revealWord) {
+  revealWord.style.setProperty("--reveal-progress", "0");
+  revealWord.addEventListener("click", () => {
+    const revealSteps = [0.18, 0.38, 0.62, 0.84, 1];
+    revealClicks = Math.min(revealClicks + 1, revealSteps.length);
+    const progress = revealSteps[revealClicks - 1];
+
+    gsap.to(revealWord, {
+      "--reveal-progress": progress,
+      duration: reduceMotionQuery.matches ? 0 : 0.34,
+      ease: "power3.out",
+      overwrite: "auto",
+    });
+
+    gsap.fromTo(revealWord,
+      { x: -2, rotation: -2 },
+      {
+        x: 0,
+        rotation: 0,
+        duration: reduceMotionQuery.matches ? 0 : 0.34,
+        ease: "elastic.out(1, 0.35)",
+        overwrite: "auto",
+      },
+    );
+
+    if (progress === 1) {
+      revealWord.classList.add("is-revealed");
+    }
+  });
+}
+
+const funnyTexts = [
+  "JAAJAJAJ, no me importa, ahora le voy a tomar masss.",
+  "Siga, sigaa y le voy a secuestrar a Eli.",
+];
+
+const funnyVideos = [
+  "img/one_year/funny1.mp4",
+  "img/one_year/funny2.mp4",
+];
+
+function randomItem(items) {
+  return items[Math.floor(Math.random() * items.length)];
+}
+
+function openFunnyModal() {
+  if (!funnyModal || !funnyModalText || !funnyModalVideo || !funnyModalVideoSource) {
+    return;
+  }
+
+  funnyModalText.textContent = randomItem(funnyTexts);
+  funnyModalVideoSource.src = randomItem(funnyVideos);
+  funnyModalVideo.muted = false;
+  funnyModalVideo.volume = 1;
+  funnyModalVideo.load();
+  funnyModal.classList.add("is-open");
+  funnyModal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+
+  gsap.fromTo(".funny-dialog",
+    { y: 28, scale: 0.92, rotation: -2 },
+    {
+      y: 0,
+      scale: 1,
+      rotation: 0,
+      duration: reduceMotionQuery.matches ? 0 : 0.36,
+      ease: "back.out(1.7)",
+    },
+  );
+
+  funnyModalVideo.play().catch(() => {});
+}
+
+function closeFunnyModal() {
+  if (!funnyModal || !funnyModalVideo) {
+    return;
+  }
+
+  funnyModal.classList.remove("is-open");
+  funnyModal.setAttribute("aria-hidden", "true");
+  funnyModalVideo.pause();
+  document.body.style.overflow = "";
+}
+
+photoStopButton?.addEventListener("click", () => {
+  const label = photoStopButton.querySelector("span");
+  const labels = ["¿Segura?", "¿Está seguraaa?"];
+
+  photoStopClicks += 1;
+
+  gsap.fromTo(photoStopButton,
+    { scale: 0.92, rotation: -2 },
+    {
+      scale: 1,
+      rotation: 0,
+      duration: reduceMotionQuery.matches ? 0 : 0.28,
+      ease: "back.out(2)",
+      overwrite: "auto",
+    },
+  );
+
+  if (photoStopClicks <= labels.length) {
+    label.textContent = labels[photoStopClicks - 1];
+    return;
+  }
+
+  photoStopClicks = 0;
+  label.textContent = "Sí";
+  openFunnyModal();
+});
+
+closeFunnyModalButton?.addEventListener("click", closeFunnyModal);
+funnyModal?.addEventListener("click", (event) => {
+  if (event.target === funnyModal) {
+    closeFunnyModal();
+  }
+});
+
 document.getElementById("memoryPrev")?.addEventListener("click", () => setMemory(currentMemory - 1));
 document.getElementById("memoryNext")?.addEventListener("click", () => setMemory(currentMemory + 1));
 
@@ -192,6 +319,11 @@ memoryStage?.addEventListener("pointerleave", () => {
 });
 
 window.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && funnyModal?.classList.contains("is-open")) {
+    closeFunnyModal();
+    return;
+  }
+
   if (event.key === "Escape" && memoryModal.classList.contains("is-open")) {
     closeMemoryModal();
     return;
@@ -232,13 +364,19 @@ const videoItems = [
     src: "img/one_year/video3.mp4",
     poster: "img/one_year/foto5.jpeg",
     title: "El ritmo de nosotros.",
-    text: "Me gusta que no todo sea estatico. Hay recuerdos que necesitan moverse un poquito para sentirse completos.",
+    text: "Me gusta que no todo sea estático. Hay recuerdos que necesitan moverse un poquito para sentirse completos.",
   },
   {
     src: "img/one_year/video4.mp4",
     poster: "img/one_year/foto9.jpeg",
     title: "Para repetirlo.",
-    text: "Este queda como recordatorio de que quiero mas momentos asi: sencillos, lindos y con usted.",
+    text: "Este queda como recordatorio de que quiero más momentos así: sencillos, lindos y con usted.",
+  },
+  {
+    src: "img/one_year/video5.mp4",
+    poster: "img/one_year/foto15.jpeg",
+    title: "Otro video para guardarlo.",
+    text: "Este también queda aquí, porque hay cosas que se sienten más vivas cuando se mueven. Y porque sí, porque me dio la gana guardarlo.",
   },
 ];
 const carouselVideo = document.getElementById("carouselVideo");
