@@ -39,18 +39,13 @@
 
     body {
       overflow-x: hidden;
-      background:
-        radial-gradient(circle at 12% 8%, rgba(255, 122, 138, 0.18), transparent 27%),
-        radial-gradient(circle at 88% 12%, rgba(115, 216, 193, 0.18), transparent 24%),
-        radial-gradient(circle at 50% 94%, rgba(255, 231, 154, 0.22), transparent 30%),
-        linear-gradient(180deg, #fffaf5 0%, #fff6fb 48%, #f4fffb 100%);
+      background: #fff6fb;
     }
 
     .soft-grid {
-      background-image:
-        linear-gradient(90deg, rgba(196, 79, 135, 0.08) 1px, transparent 1px),
-        linear-gradient(rgba(47, 157, 143, 0.08) 1px, transparent 1px);
-      background-size: 36px 36px;
+      background:
+        linear-gradient(180deg, rgba(255, 250, 245, 0.84) 0%, rgba(255, 246, 251, 0.74) 48%, rgba(244, 255, 251, 0.86) 100%),
+        url("img/one_year/foto12.jpeg") center 20% / cover fixed no-repeat;
     }
 
     .floating-layer {
@@ -227,6 +222,13 @@
         animation-duration: 0.001ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.001ms !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .soft-grid {
+        background-attachment: scroll;
+        background-position: center top;
       }
     }
   </style>
