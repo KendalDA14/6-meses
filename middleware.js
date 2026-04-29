@@ -1,11 +1,17 @@
 import { next } from "@vercel/functions";
-import { ACCESS_COOKIE, clearCookie, readCookie, readSignedToken } from "./lib/year-auth.mjs";
+import {
+  ACCESS_COOKIE,
+  clearCookie,
+  isValidAccessPayload,
+  readCookie,
+  readSignedToken,
+} from "./lib/year-auth.mjs";
 
 export default async function middleware(request) {
   const accessToken = readCookie(request, ACCESS_COOKIE);
   const access = await readSignedToken(accessToken);
 
-  if (access?.ok === true && typeof access.exp === "number" && access.exp > Date.now()) {
+  if (isValidAccessPayload(access)) {
     return next();
   }
 

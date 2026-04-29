@@ -1,5 +1,11 @@
 import { readFile } from "node:fs/promises";
-import { ACCESS_COOKIE, clearCookie, readCookie, readSignedToken } from "../lib/year-auth.mjs";
+import {
+  ACCESS_COOKIE,
+  clearCookie,
+  isValidAccessPayload,
+  readCookie,
+  readSignedToken,
+} from "../lib/year-auth.mjs";
 import { sendResponse } from "../lib/server-response.mjs";
 
 function redirectToGate(request, accessToken = "") {
@@ -24,7 +30,7 @@ async function hasValidAccess(request) {
 
   return {
     accessToken,
-    valid: access?.ok === true && typeof access.exp === "number" && access.exp > Date.now(),
+    valid: isValidAccessPayload(access),
   };
 }
 

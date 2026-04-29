@@ -1,5 +1,6 @@
 import {
   ACCESS_COOKIE,
+  ACCESS_TOKEN_VERSION,
   ACCESS_TTL_SECONDS,
   CHALLENGE_COOKIE,
   CHALLENGE_TTL_SECONDS,
@@ -96,6 +97,7 @@ async function handleAnswer(request) {
   if (isCorrectAnswer(question, payload.answer)) {
     const accessToken = await createSignedToken({
       ok: true,
+      v: ACCESS_TOKEN_VERSION,
       exp: Date.now() + ACCESS_TTL_SECONDS * 1000,
     });
 
