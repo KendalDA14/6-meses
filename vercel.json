@@ -1,4 +1,19 @@
 {
   "buildCommand": "npm run build",
-  "outputDirectory": "public"
+  "outputDirectory": "public",
+  "rewrites": [
+    {
+      "source": "/one_year.html",
+      "destination": "/api/year-page"
+    },
+    {
+      "source": "/one_year",
+      "destination": "/api/year-page"
+    }
+  ],
+  "functions": {
+    "api/year-page.mjs": {
+      "includeFiles": "one_year.html"
+    }
+  }
 }

@@ -4,7 +4,6 @@ import { existsSync } from "node:fs";
 const outputDir = "public";
 const staticFiles = [
   "index.html",
-  "one_year.html",
   "six_months.html",
   "CNAME",
 ];
