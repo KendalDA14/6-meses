@@ -46,7 +46,47 @@ function spawnFloatingToken() {
   );
 }
 
-const memoryCards = Array.from(document.querySelectorAll(".memory-card"));
+function shuffleItems(items) {
+  const storageKey = "oneYearMemoryOrder";
+  const getItemKey = (item) => item.querySelector("img")?.getAttribute("src") || item.dataset.title || "";
+  const getOrder = (list) => list.map(getItemKey).join("|");
+  let previousOrder = "";
+
+  try {
+    previousOrder = localStorage.getItem(storageKey) || "";
+  } catch {
+    previousOrder = "";
+  }
+
+  const shuffled = [...items];
+
+  for (let attempt = 0; attempt < 8; attempt += 1) {
+    for (let index = shuffled.length - 1; index > 0; index -= 1) {
+      const randomIndex = Math.floor(Math.random() * (index + 1));
+      [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+    }
+
+    if (getOrder(shuffled) !== previousOrder) {
+      break;
+    }
+  }
+
+  const matchesOriginalOrder = shuffled.every((item, index) => item === items[index]);
+
+  if (shuffled.length > 1 && (getOrder(shuffled) === previousOrder || matchesOriginalOrder)) {
+    [shuffled[0], shuffled[1]] = [shuffled[1], shuffled[0]];
+  }
+
+  try {
+    localStorage.setItem(storageKey, getOrder(shuffled));
+  } catch {
+    // If storage is blocked, the shuffle still works for this load.
+  }
+
+  return shuffled;
+}
+
+const memoryCards = shuffleItems(Array.from(document.querySelectorAll(".memory-card")));
 const memoryPosition = document.getElementById("memoryPosition");
 const memoryStage = document.getElementById("memoryStage");
 const memoryModal = document.getElementById("memoryModal");

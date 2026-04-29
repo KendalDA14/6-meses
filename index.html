@@ -46,247 +46,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
       rel="stylesheet"
     />
-    <style>
-      html {
-        scroll-behavior: smooth;
-      }
-
-      body {
-        overflow-x: hidden;
-        background: #fff7fb;
-      }
-
-      .hero-grid {
-        background:
-          linear-gradient(
-            180deg,
-            rgba(255, 250, 245, 0.86) 0%,
-            rgba(255, 247, 251, 0.76) 46%,
-            rgba(244, 255, 251, 0.86) 100%
-          ),
-          url("img/one_year/foto8.jpeg") center 18% / cover fixed no-repeat;
-      }
-
-      .float-mark {
-        position: absolute;
-        display: grid;
-        place-items: center;
-        width: clamp(2.6rem, 6vw, 4.2rem);
-        aspect-ratio: 1;
-        border-radius: 9999px;
-        background: rgba(255, 255, 255, 0.68);
-        border: 1px solid rgba(255, 255, 255, 0.9);
-        box-shadow: 0 18px 44px rgba(30, 36, 68, 0.13);
-        backdrop-filter: blur(14px);
-      }
-
-      .milestone-card {
-        min-height: 18.5rem;
-        transform-style: preserve-3d;
-        will-change: transform;
-      }
-
-      .milestone-card::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: 1.75rem;
-        background: radial-gradient(
-          circle at var(--shine-x, 50%) var(--shine-y, 28%),
-          rgba(255, 255, 255, 0.48),
-          transparent 38%
-        );
-        opacity: 0;
-        transition: opacity 180ms ease;
-        pointer-events: none;
-      }
-
-      .milestone-card:hover::before,
-      .milestone-card:focus-visible::before {
-        opacity: 1;
-      }
-
-      .locked-card {
-        filter: saturate(0.82);
-      }
-
-      .locked-card::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: 1.75rem;
-        background: linear-gradient(
-          135deg,
-          rgba(255, 255, 255, 0.28),
-          rgba(30, 36, 68, 0.08)
-        );
-        pointer-events: none;
-      }
-
-      .photo-tile {
-        will-change: transform;
-      }
-
-      .media-frame {
-        position: relative;
-        overflow: hidden;
-        background: #fff7fb;
-      }
-
-      .media-frame img,
-      .media-frame video {
-        width: 100%;
-        height: 100%;
-        display: block;
-        object-fit: cover;
-      }
-
-      .media-frame video {
-        background: #1e2444;
-      }
-
-      .year-gate-modal {
-        position: fixed;
-        inset: 0;
-        z-index: 80;
-        display: grid;
-        place-items: center;
-        padding: 1.25rem;
-        background: rgba(30, 36, 68, 0.48);
-        backdrop-filter: blur(14px);
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 220ms ease;
-      }
-
-      .year-gate-modal.is-open {
-        opacity: 1;
-        pointer-events: auto;
-      }
-
-      .year-gate-dialog {
-        position: relative;
-        width: min(100%, 31rem);
-        overflow: hidden;
-        border-radius: 1.75rem;
-        border: 1px solid rgba(255, 255, 255, 0.78);
-        background:
-          linear-gradient(
-            145deg,
-            rgba(255, 255, 255, 0.96),
-            rgba(255, 247, 251, 0.92)
-          ),
-          radial-gradient(
-            circle at 12% 12%,
-            rgba(255, 122, 138, 0.16),
-            transparent 34%
-          );
-        box-shadow: 0 30px 90px rgba(30, 36, 68, 0.28);
-        padding: clamp(1.35rem, 5vw, 2rem);
-        transform: translateY(16px) scale(0.96);
-        transition: transform 220ms ease;
-      }
-
-      .year-gate-modal.is-open .year-gate-dialog {
-        transform: translateY(0) scale(1);
-      }
-
-      .year-gate-dialog::before,
-      .year-gate-dialog::after {
-        content: "\f004";
-        position: absolute;
-        font-family: "Font Awesome 6 Free";
-        font-weight: 900;
-        color: rgba(255, 122, 138, 0.12);
-        pointer-events: none;
-      }
-
-      .year-gate-dialog::before {
-        right: 1.4rem;
-        top: 1.1rem;
-        font-size: 4rem;
-        transform: rotate(10deg);
-      }
-
-      .year-gate-dialog::after {
-        left: 1.2rem;
-        bottom: 0.9rem;
-        font-size: 2.5rem;
-        transform: rotate(-12deg);
-      }
-
-      .year-gate-close {
-        position: absolute;
-        right: 1rem;
-        top: 1rem;
-        z-index: 2;
-        display: grid;
-        width: 2.4rem;
-        height: 2.4rem;
-        place-items: center;
-        border-radius: 9999px;
-        background: rgba(255, 255, 255, 0.82);
-        color: rgba(30, 36, 68, 0.68);
-        box-shadow: 0 10px 24px rgba(30, 36, 68, 0.12);
-      }
-
-      .year-gate-input {
-        width: 100%;
-        border-radius: 1.1rem;
-        border: 1px solid rgba(196, 79, 135, 0.18);
-        background: rgba(255, 255, 255, 0.82);
-        padding: 0.95rem 1rem;
-        color: #1e2444;
-        outline: none;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
-        transition:
-          border-color 180ms ease,
-          box-shadow 180ms ease;
-      }
-
-      .year-gate-input:focus {
-        border-color: rgba(196, 79, 135, 0.55);
-        box-shadow: 0 0 0 4px rgba(255, 122, 138, 0.16);
-      }
-
-      .year-gate-status {
-        min-height: 1.5rem;
-        color: rgba(30, 36, 68, 0.62);
-      }
-
-      .year-gate-status.is-error {
-        color: #c44f87;
-      }
-
-      .year-gate-status.is-success {
-        color: #2f9d8f;
-      }
-
-      .year-gate-lock {
-        overflow: hidden;
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        html {
-          scroll-behavior: auto;
-        }
-
-        *,
-        *::before,
-        *::after {
-          animation-duration: 0.001ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.001ms !important;
-        }
-      }
-
-      @media (max-width: 768px) {
-        .hero-grid {
-          background-attachment: scroll;
-          background-position: center top;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="css/index.css" />
   </head>
 
   <body class="text-night">
@@ -325,44 +85,59 @@
             <h1
               class="hero-title mt-6 text-5xl sm:text-6xl lg:text-8xl font-black leading-none"
             >
-              La cree
+              por que cree esto?
               <span
                 class="block bg-gradient-to-r from-coral via-berry to-lagoon bg-clip-text text-transparent"
-                >para demostrar lo que siento</span
+                >Para que lo veas cuado quiera recordar los moments happy</span
               >
             </h1>
             <p
               class="hero-copy mt-6 max-w-xl text-base sm:text-lg leading-8 text-night/70"
             >
-              Cada seccion tiene sus momentos y recuerods. Ya una la viste, y
-              las otras a&uacute;n no. Cada una se desbloquea a los 6 meses. Si
-              no llegamos al tiempo que est&aacute; en las secciones, manda
-              huevo
+              Cada seccion tienen sus momentos y recuerodos te todo lo vivido en
+              ese tiempo. Ya una la viste, y las otras a&uacute;n no. Los otros
+              dos que aun no se desbloquean, depende de ambos para que sucedan.
+              Si no llegamos al tiempo que est&aacute; en las secciones, manda
+              huevo legalmente
             </p>
-            <div class="hero-actions mt-8 flex flex-wrap gap-3">
-              <a
-                href="#momentos"
-                class="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-coral via-berry to-lagoon px-6 py-3 font-semibold text-white shadow-bloom"
-              >
-                <i class="fas fa-calendar-days"></i>
-                Ver momentos
-              </a>
-              <a
-                href="one_year.html"
-                data-year-gate
-                class="inline-flex items-center gap-3 rounded-full bg-white/90 px-6 py-3 font-semibold text-night shadow-soft"
-              >
-                <i class="fas fa-star text-lagoon"></i>
-                Ir al a&ntilde;o
-              </a>
-            </div>
+            <div class="hero-actions mt-8 flex flex-wrap gap-3"></div>
           </div>
 
           <div
             class="hero-visual relative min-h-[25rem] sm:min-h-[32rem] lg:min-h-[39rem]"
           >
             <div
-              class="photo-tile absolute left-[8%] top-[5%] w-[42%] max-w-64 rotate-[-7deg] overflow-hidden rounded-[1.75rem] border border-white/80 bg-white p-2 shadow-bloom"
+              id="loveHeart"
+              class="love-heart theme-purple pointer-events-none absolute inset-0 z-[20]"
+              aria-hidden="true"
+            >
+              <svg viewBox="0 0 520 520" role="presentation">
+                <path
+                  class="love-heart-glow"
+                  d="M260 452 C116 340 58 265 72 178 C84 104 169 80 219 135 C240 158 260 190 260 190 C260 190 280 158 301 135 C351 80 436 104 448 178 C462 265 404 340 260 452 Z"
+                ></path>
+                <path
+                  id="loveHeartPath"
+                  class="love-heart-path"
+                  d="M260 452 C116 340 58 265 72 178 C84 104 169 80 219 135 C240 158 260 190 260 190 C260 190 280 158 301 135 C351 80 436 104 448 178 C462 265 404 340 260 452 Z"
+                ></path>
+              </svg>
+              <span class="heart-orbit-dot left-[15%] top-[29%]"
+                ><i class="fas fa-heart"></i
+              ></span>
+              <span class="heart-orbit-dot right-[16%] top-[29%]"
+                ><i class="fas fa-heart"></i
+              ></span>
+              <span class="heart-orbit-dot left-[24%] bottom-[18%]"
+                ><i class="fas fa-star"></i
+              ></span>
+              <span class="heart-orbit-dot right-[24%] bottom-[18%]"
+                ><i class="fas fa-star"></i
+              ></span>
+              <div id="heartParticles" class="heart-particles"></div>
+            </div>
+            <div
+              class="photo-tile absolute left-[8%] top-[5%] z-10 w-[42%] max-w-64 rotate-[-7deg] overflow-hidden rounded-[1.75rem] border border-white/80 bg-white p-2 shadow-bloom"
             >
               <div
                 class="media-frame hero-media h-64 w-full rounded-[1.35rem]"
@@ -370,7 +145,7 @@
               ></div>
             </div>
             <div
-              class="photo-tile absolute right-[3%] top-[18%] w-[48%] max-w-80 rotate-[5deg] overflow-hidden rounded-[2rem] border border-white/80 bg-white p-2 shadow-bloom"
+              class="photo-tile absolute right-[3%] top-[18%] z-10 w-[48%] max-w-80 rotate-[5deg] overflow-hidden rounded-[2rem] border border-white/80 bg-white p-2 shadow-bloom"
             >
               <div
                 class="media-frame hero-media h-80 w-full rounded-[1.55rem]"
@@ -378,7 +153,7 @@
               ></div>
             </div>
             <div
-              class="photo-tile absolute left-[22%] bottom-[3%] w-[50%] max-w-80 rotate-[-2deg] overflow-hidden rounded-[2rem] border border-white/80 bg-white p-2 shadow-bloom"
+              class="photo-tile absolute left-[22%] bottom-[3%] z-10 w-[50%] max-w-80 rotate-[-2deg] overflow-hidden rounded-[2rem] border border-white/80 bg-white p-2 shadow-bloom"
             >
               <div
                 class="media-frame hero-media h-72 w-full rounded-[1.55rem]"
@@ -393,18 +168,50 @@
         id="momentos"
         class="relative max-w-7xl mx-auto px-5 pb-16 sm:pb-24"
       >
-        <div class="section-heading mx-auto max-w-3xl text-center">
+        <div
+          class="section-heading mx-auto max-w-3xl text-center"
+          data-scroll-reveal
+        >
           <p
             class="text-xs uppercase tracking-[0.28em] text-berry font-semibold"
           >
-            Sorpresas
+            &iquest;Te gustar&aacute; todo esto?
           </p>
           <h2 class="mt-4 text-4xl sm:text-5xl font-black text-night">
             &iquest;Cu&aacute;l quieres ver?
           </h2>
         </div>
 
-        <div class="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        <div
+          id="loveDecision"
+          class="choice-panel mx-auto mt-8 max-w-xl rounded-[1.75rem] border border-white/80 bg-white/72 p-5 text-center shadow-soft backdrop-blur-md"
+          data-scroll-reveal
+        >
+          <div class="flex flex-col justify-center gap-3 sm:flex-row">
+            <button
+              id="decisionYes"
+              type="button"
+              class="choice-button inline-flex items-center justify-center gap-3 rounded-full bg-gradient-to-r from-coral via-berry to-lagoon px-6 py-3 font-bold text-white shadow-bloom"
+            >
+              <i class="fas fa-heart"></i>
+              Obviooo mi amor
+            </button>
+            <button
+              id="decisionNo"
+              type="button"
+              class="choice-button inline-flex items-center justify-center gap-3 rounded-full bg-white px-6 py-3 font-bold text-night shadow-soft"
+            >
+              <i class="fas fa-xmark text-berry"></i>
+              No
+            </button>
+          </div>
+        </div>
+
+        <div
+          id="momentCards"
+          class="reveal-content is-locked mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-4"
+          aria-hidden="true"
+        >
           <a
             href="six_months.html"
             class="milestone-card group relative overflow-hidden rounded-[1.75rem] bg-white/80 p-5 shadow-soft border border-white/80 backdrop-blur-md"
@@ -412,7 +219,7 @@
             <div class="flex items-center justify-between">
               <span
                 class="rounded-full bg-coral/20 px-3 py-1 text-sm font-bold text-berry"
-                >Disponible</span
+                >Ya desbloqueado</span
               >
               <span
                 class="grid h-11 w-11 place-items-center rounded-full bg-coral text-white shadow-soft"
@@ -450,7 +257,7 @@
             <div class="flex items-center justify-between">
               <span
                 class="rounded-full bg-jade/20 px-3 py-1 text-sm font-bold text-lagoon"
-                >Disponible</span
+                >Desbloqueado y felizmente</span
               >
               <span
                 class="grid h-11 w-11 place-items-center rounded-full bg-lagoon text-white shadow-soft"
@@ -488,7 +295,7 @@
             <div class="flex items-center justify-between">
               <span
                 class="rounded-full bg-white/80 px-3 py-1 text-sm font-bold text-night/50"
-                >Bloqueado</span
+                >En proceso...</span
               >
               <span
                 class="grid h-11 w-11 place-items-center rounded-full bg-night/80 text-white shadow-soft"
@@ -506,13 +313,13 @@
                 1 a&ntilde;o y 6 meses
               </h3>
               <p class="mt-4 text-sm leading-6 text-night/50">
-                En construcci&oacute;n.
+                En construccion, Â¿como sera este?
               </p>
             </div>
             <div
               class="mt-8 inline-flex items-center gap-3 font-bold text-night/40"
             >
-              Muy pronto
+              Pronto, pronto
               <i class="fas fa-hourglass-half"></i>
             </div>
           </article>
@@ -555,6 +362,35 @@
         </div>
       </section>
     </main>
+
+    <div id="destroyLayer" class="destroy-layer" aria-hidden="true"></div>
+
+    <div id="destroyPrompt" class="destroy-prompt" aria-hidden="true">
+      <div class="destroy-card">
+        <h2 class="destroy-title text-3xl sm:text-5xl font-black leading-tight">
+          &iquest;As&iacute; te gusta m&aacute;s la web?
+        </h2>
+        <div
+          id="destroyChoices"
+          class="mt-8 flex flex-col justify-center gap-3 sm:flex-row"
+        >
+          <button
+            id="destroyYes"
+            type="button"
+            class="choice-button destroy-button inline-flex items-center justify-center gap-3 rounded-full bg-white px-6 py-3 font-bold text-night"
+          >
+            S&iacute;
+          </button>
+          <button
+            id="destroyNo"
+            type="button"
+            class="choice-button destroy-button inline-flex items-center justify-center gap-3 rounded-full bg-transparent px-6 py-3 font-bold text-white"
+          >
+            No
+          </button>
+        </div>
+      </div>
+    </div>
 
     <div
       id="yearGateModal"
@@ -620,515 +456,7 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script>
-      const heroMedia = [
-        {
-          type: "image",
-          src: "img/six_months/1.jpeg",
-          alt: "Recuerdo de seis meses",
-        },
-        {
-          type: "image",
-          src: "img/six_months/2.jpeg",
-          alt: "Recuerdo de seis meses",
-        },
-        {
-          type: "image",
-          src: "img/six_months/3.jpeg",
-          alt: "Recuerdo de seis meses",
-        },
-        {
-          type: "image",
-          src: "img/six_months/4.jpeg",
-          alt: "Recuerdo de seis meses",
-        },
-        {
-          type: "image",
-          src: "img/six_months/5.jpeg",
-          alt: "Recuerdo de seis meses",
-        },
-        {
-          type: "image",
-          src: "img/six_months/6.1.jpeg",
-          alt: "Recuerdo de seis meses",
-        },
-        {
-          type: "image",
-          src: "img/six_months/6.png",
-          alt: "Recuerdo de seis meses",
-        },
-        {
-          type: "image",
-          src: "img/one_year/foto1.jpeg",
-          alt: "Recuerdo del primer ano",
-        },
-        {
-          type: "image",
-          src: "img/one_year/foto2.jpeg",
-          alt: "Recuerdo del primer ano",
-        },
-        {
-          type: "image",
-          src: "img/one_year/foto3.jpeg",
-          alt: "Recuerdo del primer ano",
-        },
-        {
-          type: "image",
-          src: "img/one_year/foto4.jpeg",
-          alt: "Recuerdo del primer ano",
-        },
-        {
-          type: "image",
-          src: "img/one_year/foto5.jpeg",
-          alt: "Recuerdo del primer ano",
-        },
-        {
-          type: "image",
-          src: "img/one_year/foto6.jpeg",
-          alt: "Recuerdo del primer ano",
-        },
-        {
-          type: "image",
-          src: "img/one_year/foto7.jpeg",
-          alt: "Recuerdo del primer ano",
-        },
-        {
-          type: "image",
-          src: "img/one_year/foto8.jpeg",
-          alt: "Recuerdo del primer ano",
-        },
-        {
-          type: "image",
-          src: "img/one_year/foto9.jpeg",
-          alt: "Recuerdo del primer ano",
-        },
-        {
-          type: "image",
-          src: "img/one_year/foto10.jpeg",
-          alt: "Recuerdo del primer ano",
-        },
-        {
-          type: "image",
-          src: "img/one_year/foto11.jpeg",
-          alt: "Recuerdo del primer ano",
-        },
-        {
-          type: "image",
-          src: "img/one_year/foto12.jpeg",
-          alt: "Recuerdo del primer ano",
-        },
-        {
-          type: "image",
-          src: "img/one_year/foto13.jpeg",
-          alt: "Recuerdo del primer ano",
-        },
-        {
-          type: "image",
-          src: "img/one_year/foto14.jpeg",
-          alt: "Recuerdo del primer ano",
-        },
-        {
-          type: "video",
-          src: "img/one_year/video1.mp4",
-          alt: "Video del primer ano",
-        },
-        {
-          type: "video",
-          src: "img/one_year/video2.mp4",
-          alt: "Video del primer ano",
-        },
-        {
-          type: "video",
-          src: "img/one_year/video3.mp4",
-          alt: "Video del primer ano",
-        },
-        {
-          type: "video",
-          src: "img/one_year/video4.mp4",
-          alt: "Video del primer ano",
-        },
-      ];
-
-      function getRandomMediaSet(count) {
-        return [...heroMedia].sort(() => Math.random() - 0.5).slice(0, count);
-      }
-
-      function createMediaElement(media) {
-        if (media.type === "video") {
-          const video = document.createElement("video");
-          video.src = media.src;
-          video.muted = true;
-          video.loop = true;
-          video.autoplay = true;
-          video.playsInline = true;
-          video.setAttribute("aria-label", media.alt);
-          video.addEventListener(
-            "canplay",
-            () => video.play().catch(() => {}),
-            { once: true },
-          );
-          return video;
-        }
-
-        const image = document.createElement("img");
-        image.src = media.src;
-        image.alt = media.alt;
-        image.loading = "eager";
-        return image;
-      }
-
-      function renderHeroMedia(animate = true) {
-        const slots = Array.from(document.querySelectorAll(".hero-media"));
-        const selected = getRandomMediaSet(slots.length);
-
-        slots.forEach((slot, index) => {
-          const nextElement = createMediaElement(selected[index]);
-
-          if (!animate || !slot.firstElementChild) {
-            slot.replaceChildren(nextElement);
-            gsap.set(nextElement, { autoAlpha: 1, scale: 1 });
-            return;
-          }
-
-          const previousElement = slot.firstElementChild;
-          slot.appendChild(nextElement);
-          gsap.set(nextElement, { autoAlpha: 0, scale: 1.08 });
-
-          gsap
-            .timeline({
-              defaults: { duration: 0.72, ease: "power3.out" },
-              onComplete: () => previousElement.remove(),
-            })
-            .to(previousElement, { autoAlpha: 0, scale: 0.96 }, 0)
-            .to(nextElement, { autoAlpha: 1, scale: 1 }, 0.08);
-        });
-      }
-
-      const mm = gsap.matchMedia();
-
-      renderHeroMedia(false);
-
-      const yearGateModal = document.getElementById("yearGateModal");
-      const yearGateDialog = yearGateModal?.querySelector(".year-gate-dialog");
-      const yearGateForm = document.getElementById("yearGateForm");
-      const yearGateQuestion = document.getElementById("yearGateQuestion");
-      const yearGateAnswer = document.getElementById("yearGateAnswer");
-      const yearGateStatus = document.getElementById("yearGateStatus");
-      const yearGateSubmit = document.getElementById("yearGateSubmit");
-      const closeYearGate = document.getElementById("closeYearGate");
-      let pendingYearHref = "one_year.html";
-
-      function setYearGateStatus(message, state = "") {
-        if (!yearGateStatus) return;
-        yearGateStatus.textContent = message;
-        yearGateStatus.className = `year-gate-status mt-4 text-sm leading-6${state ? ` is-${state}` : ""}`;
-      }
-
-      function updateYearQuestion(data) {
-        if (yearGateQuestion && data.question) {
-          yearGateQuestion.textContent = data.question;
-        }
-
-        if (Number.isInteger(data.attemptsLeft)) {
-          const suffix = data.attemptsLeft === 1 ? "intento" : "intentos";
-          setYearGateStatus(`Quedan ${data.attemptsLeft} ${suffix}.`, "");
-        }
-      }
-
-      async function loadYearQuestion() {
-        if (!yearGateQuestion || !yearGateSubmit) return;
-
-        yearGateSubmit.disabled = true;
-        yearGateQuestion.textContent = "Cargando pregunta...";
-        setYearGateStatus("", "");
-
-        try {
-          const response = await fetch("/api/year-gate", {
-            credentials: "same-origin",
-            cache: "no-store",
-          });
-
-          if (!response.ok) {
-            throw new Error("No se pudo cargar la pregunta.");
-          }
-
-          updateYearQuestion(await response.json());
-        } catch {
-          yearGateQuestion.textContent = "No pude cargar la pregunta.";
-          setYearGateStatus(
-            "Para probar este candado usa npx vercel dev o el deploy en Vercel.",
-            "error",
-          );
-        } finally {
-          yearGateSubmit.disabled = false;
-        }
-      }
-
-      function openYearGate(href = "one_year.html") {
-        if (!yearGateModal) return;
-
-        pendingYearHref = href;
-        yearGateModal.classList.add("is-open");
-        yearGateModal.setAttribute("aria-hidden", "false");
-        document.body.classList.add("year-gate-lock");
-        loadYearQuestion();
-
-        if (
-          !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
-          yearGateDialog
-        ) {
-          gsap.fromTo(
-            yearGateDialog,
-            { autoAlpha: 0, y: 26, scale: 0.95 },
-            {
-              autoAlpha: 1,
-              y: 0,
-              scale: 1,
-              duration: 0.42,
-              ease: "power3.out",
-            },
-          );
-        }
-
-        window.setTimeout(() => yearGateAnswer?.focus(), 160);
-      }
-
-      function closeYearGateModal() {
-        if (!yearGateModal) return;
-
-        yearGateModal.classList.remove("is-open");
-        yearGateModal.setAttribute("aria-hidden", "true");
-        document.body.classList.remove("year-gate-lock");
-        if (yearGateAnswer) yearGateAnswer.value = "";
-      }
-
-      document.querySelectorAll("[data-year-gate]").forEach((link) => {
-        link.addEventListener("click", (event) => {
-          event.preventDefault();
-          openYearGate(link.getAttribute("href") || "one_year.html");
-        });
-      });
-
-      closeYearGate?.addEventListener("click", closeYearGateModal);
-      yearGateModal?.addEventListener("click", (event) => {
-        if (event.target === yearGateModal) {
-          closeYearGateModal();
-        }
-      });
-      window.addEventListener("keydown", (event) => {
-        if (
-          event.key === "Escape" &&
-          yearGateModal?.classList.contains("is-open")
-        ) {
-          closeYearGateModal();
-        }
-      });
-
-      yearGateForm?.addEventListener("submit", async (event) => {
-        event.preventDefault();
-
-        const answer = yearGateAnswer?.value.trim() || "";
-        if (!answer) {
-          setYearGateStatus("Escribe una respuesta para intentar.", "error");
-          return;
-        }
-
-        yearGateSubmit.disabled = true;
-        setYearGateStatus("Revisando...", "");
-
-        try {
-          const response = await fetch("/api/year-gate", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: "same-origin",
-            body: JSON.stringify({ answer }),
-          });
-          const data = await response.json();
-
-          if (data.ok) {
-            setYearGateStatus("Listo. Entrando...", "success");
-            window.location.href =
-              pendingYearHref || data.redirect || "one_year.html";
-            return;
-          }
-
-          if (yearGateAnswer) yearGateAnswer.value = "";
-          if (data.question) {
-            updateYearQuestion(data);
-            if (
-              !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-            ) {
-              gsap.fromTo(
-                yearGateQuestion,
-                { autoAlpha: 0, y: 10 },
-                { autoAlpha: 1, y: 0, duration: 0.32 },
-              );
-            }
-          } else if (Number.isInteger(data.attemptsLeft)) {
-            updateYearQuestion(data);
-          }
-
-          const attemptsText = Number.isInteger(data.attemptsLeft)
-            ? ` Quedan ${data.attemptsLeft} ${data.attemptsLeft === 1 ? "intento" : "intentos"}.`
-            : "";
-          setYearGateStatus(
-            `${data.message || "Todavia no. Prueba otra vez."}${attemptsText}`,
-            "error",
-          );
-        } catch {
-          setYearGateStatus(
-            "No pude revisar la respuesta. Usa npx vercel dev para probarlo local.",
-            "error",
-          );
-        } finally {
-          yearGateSubmit.disabled = false;
-          yearGateAnswer?.focus();
-        }
-      });
-
-      if (
-        new URLSearchParams(window.location.search).get("locked") === "year"
-      ) {
-        openYearGate("one_year.html");
-        window.history.replaceState(
-          null,
-          "",
-          window.location.pathname + window.location.hash,
-        );
-      }
-
-      mm.add(
-        {
-          reduceMotion: "(prefers-reduced-motion: reduce)",
-          isDesktop: "(min-width: 900px)",
-        },
-        (context) => {
-          const { reduceMotion, isDesktop } = context.conditions;
-
-          if (reduceMotion) {
-            gsap.set(
-              [
-                ".hero-kicker",
-                ".hero-title",
-                ".hero-copy",
-                ".hero-actions",
-                ".photo-tile",
-                ".hero-note",
-                ".section-heading",
-                ".milestone-card",
-              ],
-              { autoAlpha: 1, clearProps: "transform" },
-            );
-            return;
-          }
-
-          const intro = gsap.timeline({
-            defaults: {
-              duration: 0.82,
-              ease: "power3.out",
-            },
-          });
-
-          intro
-            .from(".hero-kicker", { autoAlpha: 0, y: 18 })
-            .from(".hero-title", { autoAlpha: 0, y: 30 }, "<0.12")
-            .from(".hero-copy", { autoAlpha: 0, y: 22 }, "<0.16")
-            .from(".hero-actions", { autoAlpha: 0, y: 18 }, "<0.16")
-            .from(
-              ".photo-tile",
-              {
-                autoAlpha: 0,
-                y: 42,
-                scale: 0.88,
-                rotation: (index) => [-13, 11, -7][index],
-                stagger: 0.12,
-              },
-              "<0.05",
-            )
-            .from(".hero-note", { autoAlpha: 0, y: 22, scale: 0.92 }, "<0.3")
-            .from(".section-heading", { autoAlpha: 0, y: 22 }, "-=0.2")
-            .from(
-              ".milestone-card",
-              {
-                autoAlpha: 0,
-                y: 32,
-                scale: 0.96,
-                stagger: {
-                  each: 0.08,
-                  from: "start",
-                },
-              },
-              "<0.08",
-            );
-
-          gsap.to(".hero-float", {
-            y: (index) => [-18, 22, -14, 18][index],
-            x: (index) => [12, -10, 8, -12][index],
-            rotation: (index) => [-8, 9, 7, -10][index],
-            duration: 3.2,
-            ease: "sine.inOut",
-            repeat: -1,
-            yoyo: true,
-            stagger: 0.25,
-          });
-
-          gsap.to(".photo-tile", {
-            y: (index) => [10, -12, 8][index],
-            duration: 3.8,
-            ease: "sine.inOut",
-            repeat: -1,
-            yoyo: true,
-            stagger: 0.3,
-          });
-
-          if (isDesktop) {
-            const visual = document.querySelector(".hero-visual");
-            const tiles = gsap.utils.toArray(".photo-tile");
-
-            visual?.addEventListener("mousemove", (event) => {
-              const rect = visual.getBoundingClientRect();
-              const x = (event.clientX - rect.left) / rect.width - 0.5;
-              const y = (event.clientY - rect.top) / rect.height - 0.5;
-
-              tiles.forEach((tile, index) => {
-                const depth = (index + 1) * 10;
-                gsap.to(tile, {
-                  x: x * depth,
-                  y: y * depth,
-                  rotationY: x * 5,
-                  rotationX: -y * 5,
-                  duration: 0.45,
-                  ease: "power2.out",
-                  overwrite: "auto",
-                });
-              });
-            });
-
-            visual?.addEventListener("mouseleave", () => {
-              gsap.to(tiles, {
-                x: 0,
-                rotationX: 0,
-                rotationY: 0,
-                duration: 0.6,
-                ease: "power2.out",
-                overwrite: "auto",
-              });
-            });
-          }
-        },
-      );
-
-      document.querySelectorAll(".milestone-card").forEach((card) => {
-        card.addEventListener("mousemove", (event) => {
-          const rect = card.getBoundingClientRect();
-          const percentX = ((event.clientX - rect.left) / rect.width) * 100;
-          const percentY = ((event.clientY - rect.top) / rect.height) * 100;
-          card.style.setProperty("--shine-x", `${percentX.toFixed(2)}%`);
-          card.style.setProperty("--shine-y", `${percentY.toFixed(2)}%`);
-        });
-      });
-
-      window.setInterval(() => renderHeroMedia(true), 14000);
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="js/index.js"></script>
   </body>
 </html>

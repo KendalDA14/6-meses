@@ -9,6 +9,7 @@ const staticFiles = [
   "CNAME",
 ];
 const staticDirs = [
+  "css",
   "img",
   "js",
   "music",
