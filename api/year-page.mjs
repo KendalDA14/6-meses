@@ -8,8 +8,26 @@ import {
 } from "../lib/year-auth.mjs";
 import { sendResponse } from "../lib/server-response.mjs";
 
+function getHeader(request, name) {
+  if (typeof request.headers?.get === "function") {
+    return request.headers.get(name) || "";
+  }
+
+  return request.headers?.[name.toLowerCase()] || request.headers?.[name] || "";
+}
+
+function getRequestUrl(request) {
+  try {
+    return new URL(request.url);
+  } catch {
+    const host = getHeader(request, "host") || "loviuanahi.space";
+    const proto = getHeader(request, "x-forwarded-proto") || "https";
+    return new URL(request.url || "/", `${proto}://${host}`);
+  }
+}
+
 function redirectToGate(request, accessToken = "") {
-  const url = new URL("/index.html", request.url);
+  const url = new URL("/index.html", getRequestUrl(request));
   url.searchParams.set("locked", "year");
 
   const headers = new Headers({
