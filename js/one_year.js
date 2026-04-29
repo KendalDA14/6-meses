@@ -156,13 +156,16 @@ function setMemory(index) {
 function openMemoryModal(index = currentMemory) {
   const card = memoryCards[index];
   const image = card.querySelector("img");
+  const captionLabel = card.querySelector(".memory-caption span");
+  const captionText = card.querySelector(".memory-caption strong");
 
   setMemory(index);
   memoryModalImage.src = image.getAttribute("src") || "";
   memoryModalImage.alt = image.getAttribute("alt") || "";
-  memoryModalCounter.textContent = `Recuerdo ${String(index + 1).padStart(2, "0")}`;
-  memoryModalTitle.textContent = card.dataset.title || "";
-  memoryModalText.textContent = card.dataset.text || "";
+  // El modal lee el texto visible de cada foto para que editar el HTML sea suficiente.
+  memoryModalCounter.textContent = captionLabel?.textContent?.trim() || `Recuerdo ${String(index + 1).padStart(2, "0")}`;
+  memoryModalTitle.textContent = card.dataset.title || captionText?.textContent?.trim() || "";
+  memoryModalText.textContent = captionText?.textContent?.trim() || "";
   memoryModal.classList.add("is-open");
   document.body.style.overflow = "hidden";
 
@@ -263,7 +266,7 @@ function closeFunnyModal() {
 
 photoStopButton?.addEventListener("click", () => {
   const label = photoStopButton.querySelector("span");
-  const labels = ["¿Segura?", "¿Está seguraaa?"];
+  const labels = ["\u00bfSegura?", "\u00bfEst\u00e1 seguraaa?"];
 
   photoStopClicks += 1;
 
@@ -284,7 +287,7 @@ photoStopButton?.addEventListener("click", () => {
   }
 
   photoStopClicks = 0;
-  label.textContent = "Sí";
+  label.textContent = "S\u00ed";
   openFunnyModal();
 });
 
@@ -387,38 +390,18 @@ window.addEventListener("keydown", (event) => {
 window.addEventListener("resize", updateMemoryDeck);
 updateMemoryDeck();
 
-const videoItems = [
-  {
-    src: "img/one_year/video1.mp4",
-    poster: "img/one_year/foto14.jpeg",
-    title: "Esto se mueve como recuerdo.",
-    text: "Hay cosas que una foto deja quietas, pero un video las vuelve a prender. Este espacio queda para eso: para recordar movimiento, voces, risas, salidas y pedacitos que me hacen pensar en usted.",
-  },
-  {
-    src: "img/one_year/video2.mp4",
-    poster: "img/one_year/foto2.jpeg",
-    title: "Una parte viva.",
-    text: "Este video queda como una ventanita a un momento real. No perfecto, no posado, solo nuestro y bonito por eso.",
-  },
-  {
-    src: "img/one_year/video3.mp4",
-    poster: "img/one_year/foto5.jpeg",
-    title: "El ritmo de nosotros.",
-    text: "Me gusta que no todo sea estático. Hay recuerdos que necesitan moverse un poquito para sentirse completos.",
-  },
-  {
-    src: "img/one_year/video4.mp4",
-    poster: "img/one_year/foto9.jpeg",
-    title: "Para repetirlo.",
-    text: "Este queda como recordatorio de que quiero más momentos así: sencillos, lindos y con usted.",
-  },
-  {
-    src: "img/one_year/video5.mp4",
-    poster: "img/one_year/foto15.jpeg",
-    title: "Otro video para guardarlo.",
-    text: "Este también queda aquí, porque hay cosas que se sienten más vivas cuando se mueven. Y porque sí, porque me dio la gana guardarlo.",
-  },
-];
+function readVideoItemsFromHtml() {
+  return Array.from(document.querySelectorAll(".video-data-item"))
+    .map((item) => ({
+      src: item.dataset.src || "",
+      title: item.querySelector(".video-data-title")?.textContent?.trim() || "",
+      text: item.querySelector(".video-data-text")?.textContent?.trim() || "",
+    }))
+    .filter((item) => item.src);
+}
+
+const videoItems = readVideoItemsFromHtml();
+const videoCarousel = document.querySelector(".video-carousel");
 const carouselVideo = document.getElementById("carouselVideo");
 const carouselVideoSource = document.getElementById("carouselVideoSource");
 const videoPosition = document.getElementById("videoPosition");
@@ -436,9 +419,12 @@ carouselVideo.muted = false;
 carouselVideo.volume = 1;
 carouselVideo.addEventListener("play", () => {
   videoAudioStarted = true;
+  videoCarousel?.classList.add("is-playing");
 });
 
 carouselVideo.addEventListener("pause", () => {
+  videoCarousel?.classList.remove("is-playing");
+
   if (videoSectionInView) {
     resumeVideoOnReturn = false;
   }
@@ -467,13 +453,18 @@ if (videoSection) {
 }
 
 function setVideo(index, shouldPlay = false) {
+  if (!videoItems.length) {
+    return;
+  }
+
   currentVideo = (index + videoItems.length) % videoItems.length;
   const item = videoItems[currentVideo];
 
   gsap.timeline({ defaults: { duration: reduceMotionQuery.matches ? 0 : 0.26, ease: "power2.out" } })
     .to([carouselVideo, videoCounter, videoTitle, videoText], { autoAlpha: 0, y: 10 })
     .add(() => {
-      carouselVideo.poster = item.poster;
+      videoCarousel?.classList.remove("is-playing");
+      carouselVideo.removeAttribute("poster");
       carouselVideoSource.src = item.src;
       carouselVideo.muted = false;
       carouselVideo.volume = 1;
@@ -500,6 +491,243 @@ videoDots.forEach((dot) => {
 });
 setVideo(0, false);
 
+function initLooseNumbers() {
+  const box = document.getElementById("numberBox");
+  const form = document.getElementById("numberPuzzleForm");
+  const pieceA = document.getElementById("pieceA");
+  const pieceB = document.getElementById("pieceB");
+  const status = document.getElementById("numberPuzzleStatus");
+
+  if (!box || !form || !pieceA || !pieceB || !status) {
+    return;
+  }
+
+  const options = ["03", "05", "08", "11", "12", "14", "15", "20", "21", "25", "26", "30"];
+  const floatingValues = ["05", "15", "20", "25", "30", "03", "08", "11", "12", "06", "26", "14", "21", "07"];
+  const pieces = [];
+  let solved = false;
+  let animationFrameId = 0;
+  let isBoxVisible = true;
+
+  function fillSelect(select) {
+    select.innerHTML = "";
+    options.forEach((value) => {
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = value;
+      select.appendChild(option);
+    });
+  }
+
+  function bounds() {
+    return {
+      width: Math.max(1, box.clientWidth),
+      height: Math.max(1, box.clientHeight),
+    };
+  }
+
+  function addPiece(text, extraClass = "", start = {}) {
+    const { width, height } = bounds();
+    const element = document.createElement("span");
+    element.className = `puzzle-piece ${extraClass}`.trim();
+    element.textContent = text;
+    box.appendChild(element);
+
+    const size = element.getBoundingClientRect();
+    const piece = {
+      element,
+      x: start.x ?? Math.random() * Math.max(24, width - size.width),
+      y: start.y ?? Math.random() * Math.max(24, height - size.height),
+      vx: start.vx ?? (Math.random() * 2.4 - 1.2),
+      vy: start.vy ?? (Math.random() * -1.8 - 0.3),
+      rotation: Math.random() * 18 - 9,
+      spin: Math.random() * 0.8 - 0.4,
+      width: size.width,
+      height: size.height,
+    };
+
+    pieces.push(piece);
+    return piece;
+  }
+
+  function animatePieces() {
+    if (!isBoxVisible || document.hidden || reduceMotionQuery.matches) {
+      animationFrameId = 0;
+      return;
+    }
+
+    const { width, height } = bounds();
+    const gravity = solved ? 0.008 : 0.035;
+
+    pieces.forEach((piece) => {
+      piece.vy += gravity;
+      piece.x += piece.vx;
+      piece.y += piece.vy;
+      piece.rotation += piece.spin;
+
+      if (piece.x <= 0 || piece.x + piece.width >= width) {
+        piece.x = gsap.utils.clamp(0, Math.max(0, width - piece.width), piece.x);
+        piece.vx *= -0.92;
+      }
+
+      if (piece.y <= 0 || piece.y + piece.height >= height) {
+        piece.y = gsap.utils.clamp(0, Math.max(0, height - piece.height), piece.y);
+        piece.vy *= -0.82;
+        piece.vx *= 0.99;
+      }
+
+      piece.element.style.transform = `translate(${piece.x}px, ${piece.y}px) rotate(${piece.rotation}deg)`;
+    });
+
+    animationFrameId = window.requestAnimationFrame(animatePieces);
+  }
+
+  function startPieces() {
+    if (!animationFrameId && isBoxVisible && !document.hidden && !reduceMotionQuery.matches) {
+      animationFrameId = window.requestAnimationFrame(animatePieces);
+    }
+  }
+
+  function stopPieces() {
+    if (animationFrameId) {
+      window.cancelAnimationFrame(animationFrameId);
+      animationFrameId = 0;
+    }
+  }
+
+  function addWrongPiece(left, right) {
+    const { width, height } = bounds();
+    const piece = addPiece(`${left}/${right}`, "is-wrong", {
+      x: width * 0.5 - 28,
+      y: height - 72,
+      vx: Math.random() * 7 - 3.5,
+      vy: -8.5 - Math.random() * 3,
+    });
+
+    gsap.fromTo(piece.element,
+      { scale: 0.4, autoAlpha: 0 },
+      { scale: 1, autoAlpha: 1, duration: 0.34, ease: "back.out(2)" },
+    );
+  }
+
+  function bloom(message) {
+    solved = true;
+    box.classList.add("is-open");
+    status.classList.add("is-open");
+    status.innerHTML = message;
+    pieceA.disabled = true;
+    pieceB.disabled = true;
+    form.querySelector("button").disabled = true;
+
+    pieces.forEach((piece) => {
+      piece.vx *= 0.24;
+      piece.vy *= 0.12;
+      piece.spin *= 0.3;
+    });
+
+    const flowers = ["&#127799;", "&#127800;", "&#127801;", "&#127804;", "&#127803;"];
+    const { width, height } = bounds();
+    const timeline = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+    for (let index = 0; index < 18; index += 1) {
+      const flower = document.createElement("span");
+      flower.className = "puzzle-flower";
+      flower.innerHTML = flowers[index % flowers.length];
+      flower.style.left = `${Math.random() * width}px`;
+      flower.style.top = `${height + 16}px`;
+      box.appendChild(flower);
+
+      timeline.to(flower, {
+        y: -(height * (0.25 + Math.random() * 0.65)),
+        x: Math.random() * 80 - 40,
+        rotation: Math.random() * 50 - 25,
+        scale: 0.82 + Math.random() * 0.58,
+        duration: 1.2 + Math.random() * 0.8,
+      }, index * 0.035);
+    }
+
+    timeline
+      .fromTo(status, { y: 14, scale: 0.94 }, { y: 0, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, 0.2)
+      .to(box, { boxShadow: "0 30px 100px rgba(196, 79, 135, 0.22)", duration: 0.6 }, 0);
+  }
+
+  async function checkPieces(left, right) {
+    const response = await fetch("/api/hidden-piece", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify({ left, right }),
+    });
+
+    if (!response.ok) {
+      throw new Error("request failed");
+    }
+
+    return response.json();
+  }
+
+  fillSelect(pieceA);
+  fillSelect(pieceB);
+  floatingValues.forEach((value) => addPiece(value));
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      isBoxVisible = entry.isIntersecting;
+      if (isBoxVisible) {
+        startPieces();
+      } else {
+        stopPieces();
+      }
+    },
+    { threshold: 0.04 },
+  );
+
+  observer.observe(box);
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      stopPieces();
+    } else {
+      startPieces();
+    }
+  });
+  startPieces();
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (solved) {
+      return;
+    }
+
+    const left = pieceA.value;
+    const right = pieceB.value;
+    const submitButton = form.querySelector("button");
+    submitButton.disabled = true;
+    status.classList.remove("is-open");
+    status.textContent = "Viendo si cae...";
+
+    try {
+      const result = await checkPieces(left, right);
+
+      if (result.ok) {
+        bloom(result.message);
+        return;
+      }
+
+      addWrongPiece(left, right);
+      status.innerHTML = result.message;
+    } catch {
+      addWrongPiece(left, right);
+      status.innerHTML = "Esto solo despierta cuando la p&aacute;gina corre desde Vercel.";
+    } finally {
+      if (!solved) {
+        submitButton.disabled = false;
+      }
+    }
+  });
+}
+
+initLooseNumbers();
+
 mm.add(
   {
     reduceMotion: "(prefers-reduced-motion: reduce)",
@@ -514,14 +742,13 @@ mm.add(
         ".hero-kicker",
         ".hero-title",
         ".hero-copy",
-        ".hero-actions",
         ".hero-photo",
-        ".hero-note",
         ".intro-note",
         ".section-heading",
         ".feature-photo",
         ".video-section",
         ".final-card",
+        ".loose-card",
       ], { autoAlpha: 1, clearProps: "transform" });
       return;
     }
@@ -535,15 +762,13 @@ mm.add(
       .from(".hero-kicker", { autoAlpha: 0, y: 16 }, "<0.08")
       .from(".hero-title", { autoAlpha: 0, y: 34 }, "<0.12")
       .from(".hero-copy", { autoAlpha: 0, y: 24 }, "<0.16")
-      .from(".hero-actions", { autoAlpha: 0, y: 18 }, "<0.16")
       .from(".hero-photo", {
         autoAlpha: 0,
         y: 46,
         scale: 0.86,
         rotation: (index) => [-14, 12, -8][index],
         stagger: 0.14,
-      }, "<0.02")
-      .from(".hero-note", { autoAlpha: 0, y: 24, scale: 0.92 }, "<0.28");
+      }, "<0.02");
 
     gsap.to(".hero-photo", {
       y: (index) => [12, -14, 10][index],
@@ -617,6 +842,19 @@ mm.add(
       ease: "power3.out",
       scrollTrigger: {
         trigger: ".final-card",
+        start: "top 82%",
+        toggleActions: "play none none reverse",
+      },
+    });
+
+    gsap.from(".loose-card", {
+      autoAlpha: 0,
+      y: 44,
+      scale: 0.96,
+      duration: 0.84,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: ".loose-card",
         start: "top 82%",
         toggleActions: "play none none reverse",
       },

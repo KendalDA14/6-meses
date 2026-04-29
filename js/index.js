@@ -410,10 +410,135 @@
         }
       });
 
+      const sixGateModal = document.getElementById("sixGateModal");
+      const sixGateDialog = sixGateModal?.querySelector(".year-gate-dialog");
+      const sixGateForm = document.getElementById("sixGateForm");
+      const sixGateCode = document.getElementById("sixGateCode");
+      const sixGateStatus = document.getElementById("sixGateStatus");
+      const sixGateSubmit = document.getElementById("sixGateSubmit");
+      const closeSixGate = document.getElementById("closeSixGate");
+      let pendingSixHref = "six_months.html";
+
+      function setSixGateStatus(message, state = "") {
+        if (!sixGateStatus) return;
+        sixGateStatus.textContent = message;
+        sixGateStatus.className = `year-gate-status mt-4 text-sm leading-6${state ? ` is-${state}` : ""}`;
+      }
+
+      function openSixGate(href = "six_months.html") {
+        if (!sixGateModal) return;
+
+        pendingSixHref = href;
+        sixGateModal.classList.add("is-open");
+        sixGateModal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("year-gate-lock");
+        setSixGateStatus("", "");
+
+        if (hasGsap && !reduceMotionQuery.matches && sixGateDialog) {
+          gsap.fromTo(
+            sixGateDialog,
+            { autoAlpha: 0, y: 26, scale: 0.95 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.42,
+              ease: "power3.out",
+            },
+          );
+        }
+
+        window.setTimeout(() => sixGateCode?.focus(), 160);
+      }
+
+      function closeSixGateModal() {
+        if (!sixGateModal) return;
+
+        sixGateModal.classList.remove("is-open");
+        sixGateModal.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("year-gate-lock");
+        if (sixGateCode) sixGateCode.value = "";
+      }
+
+      document.querySelectorAll("[data-six-gate]").forEach((link) => {
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          openSixGate(link.getAttribute("href") || "six_months.html");
+        });
+      });
+
+      closeSixGate?.addEventListener("click", closeSixGateModal);
+      sixGateModal?.addEventListener("click", (event) => {
+        if (event.target === sixGateModal) {
+          closeSixGateModal();
+        }
+      });
+
+      window.addEventListener("keydown", (event) => {
+        if (
+          event.key === "Escape" &&
+          sixGateModal?.classList.contains("is-open")
+        ) {
+          closeSixGateModal();
+        }
+      });
+
+      sixGateForm?.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const code = sixGateCode?.value.trim() || "";
+        if (!code) {
+          setSixGateStatus("Escribe el codigo para intentar.", "error");
+          return;
+        }
+
+        sixGateSubmit.disabled = true;
+        setSixGateStatus("Revisando...", "");
+
+        try {
+          const response = await fetch("/api/six-gate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "same-origin",
+            body: JSON.stringify({ code }),
+          });
+          const data = await response.json();
+
+          if (data.ok) {
+            setSixGateStatus("Listo. Entrando...", "success");
+            window.location.href =
+              pendingSixHref || data.redirect || "six_months.html";
+            return;
+          }
+
+          if (sixGateCode) sixGateCode.value = "";
+          setSixGateStatus(data.message || "Ese no era. Prueba otra vez.", "error");
+        } catch {
+          setSixGateStatus(
+            "No pude revisar el codigo. Usa npx vercel dev para probarlo local.",
+            "error",
+          );
+        } finally {
+          sixGateSubmit.disabled = false;
+          sixGateCode?.focus();
+        }
+      });
+
       if (
         new URLSearchParams(window.location.search).get("locked") === "year"
       ) {
         openYearGate("one_year.html");
+        window.history.replaceState(
+          null,
+          "",
+          window.location.pathname + window.location.hash,
+        );
+      }
+
+      if (
+        new URLSearchParams(window.location.search).get("locked") === "six"
+      ) {
+        openSixGate("six_months.html");
         window.history.replaceState(
           null,
           "",

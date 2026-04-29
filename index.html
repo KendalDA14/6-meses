@@ -193,7 +193,6 @@
               type="button"
               class="choice-button inline-flex items-center justify-center gap-3 rounded-full bg-gradient-to-r from-coral via-berry to-lagoon px-6 py-3 font-bold text-white shadow-bloom"
             >
-              <i class="fas fa-heart"></i>
               Obviooo mi amor
             </button>
             <button
@@ -201,7 +200,6 @@
               type="button"
               class="choice-button inline-flex items-center justify-center gap-3 rounded-full bg-white px-6 py-3 font-bold text-night shadow-soft"
             >
-              <i class="fas fa-xmark text-berry"></i>
               No
             </button>
           </div>
@@ -214,6 +212,7 @@
         >
           <a
             href="six_months.html"
+            data-six-gate
             class="milestone-card group relative overflow-hidden rounded-[1.75rem] bg-white/80 p-5 shadow-soft border border-white/80 backdrop-blur-md"
           >
             <div class="flex items-center justify-between">
@@ -455,8 +454,72 @@
       </div>
     </div>
 
+    <div
+      id="sixGateModal"
+      class="year-gate-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="sixGateTitle"
+      aria-hidden="true"
+    >
+      <div class="year-gate-dialog">
+        <button
+          id="closeSixGate"
+          class="year-gate-close"
+          type="button"
+          aria-label="Cerrar c&oacute;digo"
+        >
+          <i class="fas fa-xmark"></i>
+        </button>
+        <div class="relative z-[1]">
+          <p
+            class="inline-flex items-center gap-2 rounded-full bg-coral/15 px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-berry"
+          >
+            <i class="fas fa-lock"></i>
+            Recuerdo guardado
+          </p>
+          <h2
+            id="sixGateTitle"
+            class="mt-5 text-3xl sm:text-4xl font-black text-night"
+          >
+            Antes de entrar
+          </h2>
+          <p class="mt-4 text-base leading-7 text-night/70">
+            Escribe el c&oacute;digo para abrir este recuerdo.
+          </p>
+          <form id="sixGateForm" class="mt-6 space-y-3">
+            <label class="sr-only" for="sixGateCode">C&oacute;digo</label>
+            <input
+              id="sixGateCode"
+              class="year-gate-input"
+              type="password"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              autocomplete="off"
+              maxlength="12"
+              placeholder="C&oacute;digo"
+            />
+            <button
+              id="sixGateSubmit"
+              type="submit"
+              class="inline-flex w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-coral via-berry to-lagoon px-5 py-3 font-bold text-white shadow-bloom"
+            >
+              <i class="fas fa-heart"></i>
+              Abrir
+            </button>
+          </form>
+          <p
+            id="sixGateStatus"
+            class="year-gate-status mt-4 text-sm leading-6"
+            aria-live="polite"
+          ></p>
+        </div>
+      </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script defer src="/_vercel/insights/script.js"></script>
     <script src="js/index.js"></script>
   </body>
 </html>

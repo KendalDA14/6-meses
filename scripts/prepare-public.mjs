@@ -2,11 +2,7 @@ import { cp, mkdir, rm } from "node:fs/promises";
 import { existsSync } from "node:fs";
 
 const outputDir = "public";
-const staticFiles = [
-  "index.html",
-  "six_months.html",
-  "CNAME",
-];
+const staticFiles = ["index.html"];
 const staticDirs = [
   "css",
   "img",

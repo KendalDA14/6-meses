@@ -9,11 +9,22 @@
     {
       "source": "/one_year",
       "destination": "/api/year-page"
+    },
+    {
+      "source": "/six_months.html",
+      "destination": "/api/six-page"
+    },
+    {
+      "source": "/six_months",
+      "destination": "/api/six-page"
     }
   ],
   "functions": {
     "api/year-page.mjs": {
       "includeFiles": "one_year.html"
+    },
+    "api/six-page.mjs": {
+      "includeFiles": "six_months.html"
     }
   }
 }
