@@ -139,6 +139,8 @@ let playedTracks = [];
 let currentTrackIndex = -1;
 let musicUserPaused = false;
 let musicSuspendedByVideo = false;
+let musicSuspendedByModal = false;
+let musicSuspendedByPage = false;
 let musicStartedOnce = false;
 
 function shuffleIndexes(length, avoidFirst = -1) {
@@ -316,6 +318,35 @@ function pauseMusic({ byUser = false, byVideo = false } = {}) {
   setMusicIcon(false);
 }
 
+function suspendMusic(reason) {
+  if (!oneYearAudio || oneYearAudio.paused) {
+    return;
+  }
+
+  if (reason === "modal") {
+    musicSuspendedByModal = true;
+  }
+
+  if (reason === "page") {
+    musicSuspendedByPage = true;
+  }
+
+  oneYearAudio.pause();
+  setMusicIcon(false);
+}
+
+function resumeSuspendedMusic(reason) {
+  if (reason === "modal" && musicSuspendedByModal && !musicUserPaused) {
+    musicSuspendedByModal = false;
+    playMusic();
+  }
+
+  if (reason === "page" && musicSuspendedByPage && !musicUserPaused) {
+    musicSuspendedByPage = false;
+    playMusic();
+  }
+}
+
 function pauseMusicForVideoSection() {
   pauseMusic({ byVideo: true });
 }
@@ -380,6 +411,25 @@ function initOneYearMusic() {
       playMusic();
     }
   }, { once: true });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      suspendMusic("page");
+      return;
+    }
+
+    resumeSuspendedMusic("page");
+  });
+
+  window.addEventListener("pagehide", () => {
+    suspendMusic("page");
+  });
+
+  window.addEventListener("pageshow", () => {
+    if (!document.hidden) {
+      resumeSuspendedMusic("page");
+    }
+  });
 }
 
 initOneYearMusic();
@@ -505,6 +555,7 @@ function openFunnyModal() {
     return;
   }
 
+  suspendMusic("modal");
   funnyModalText.textContent = randomItem(funnyTexts);
   funnyModalVideoSource.src = randomItem(funnyVideos);
   funnyModalVideo.muted = false;
@@ -537,6 +588,7 @@ function closeFunnyModal() {
   funnyModal.setAttribute("aria-hidden", "true");
   funnyModalVideo.pause();
   document.body.style.overflow = "";
+  resumeSuspendedMusic("modal");
 
   if (shouldHidePhotoStopCard && photoStopCard) {
     shouldHidePhotoStopCard = false;
