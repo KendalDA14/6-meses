@@ -96,6 +96,7 @@ const memoryModalTitle = document.getElementById("memoryModalTitle");
 const memoryModalText = document.getElementById("memoryModalText");
 const closeMemoryModalButton = document.getElementById("closeMemoryModal");
 const revealWord = document.getElementById("revealWord");
+const photoStopCard = document.getElementById("photoStopCard");
 const photoStopButton = document.getElementById("photoStopButton");
 const funnyModal = document.getElementById("funnyModal");
 const funnyModalText = document.getElementById("funnyModalText");
@@ -108,6 +109,7 @@ let dragX = 0;
 let isDragging = false;
 let revealClicks = 0;
 let photoStopClicks = 0;
+let shouldHidePhotoStopCard = false;
 
 function getMemorySpacing() {
   return window.innerWidth < 720 ? 112 : 168;
@@ -262,6 +264,20 @@ function closeFunnyModal() {
   funnyModal.setAttribute("aria-hidden", "true");
   funnyModalVideo.pause();
   document.body.style.overflow = "";
+
+  if (shouldHidePhotoStopCard && photoStopCard) {
+    shouldHidePhotoStopCard = false;
+    gsap.to(photoStopCard, {
+      autoAlpha: 0,
+      y: 18,
+      scale: 0.96,
+      duration: reduceMotionQuery.matches ? 0 : 0.32,
+      ease: "power3.inOut",
+      onComplete: () => {
+        photoStopCard.remove();
+      },
+    });
+  }
 }
 
 photoStopButton?.addEventListener("click", () => {
@@ -288,6 +304,7 @@ photoStopButton?.addEventListener("click", () => {
 
   photoStopClicks = 0;
   label.textContent = "S\u00ed";
+  shouldHidePhotoStopCard = true;
   openFunnyModal();
 });
 
