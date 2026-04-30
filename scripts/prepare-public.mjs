@@ -2,7 +2,7 @@ import { cp, mkdir, rm } from "node:fs/promises";
 import { existsSync } from "node:fs";
 
 const outputDir = "public";
-const staticFiles = ["index.html"];
+const staticFiles = ["index.html", "manifest.webmanifest"];
 const staticDirs = [
   "css",
   "img",
