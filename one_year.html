@@ -56,6 +56,7 @@
 
   <body class="text-night">
     <div id="floatingLayer" class="floating-layer" aria-hidden="true"></div>
+    <audio id="oneYearAudio" preload="metadata"></audio>
 
     <main class="soft-grid">
       <header class="relative isolate min-h-screen overflow-hidden">
@@ -77,10 +78,26 @@
                 Volver
               </a>
               <div
-                class="hero-kicker mt-5 inline-flex items-center gap-3 rounded-full bg-white/75 px-4 py-2 text-xs uppercase tracking-[0.24em] text-berry font-bold shadow-soft"
+                class="music-player mt-5 inline-flex items-center gap-2 rounded-full bg-white/75 px-3 py-2 text-xs text-berry font-bold shadow-soft"
+                aria-label="Controles de música"
               >
-                <i class="fas fa-heart text-coral"></i>
-                Fotos que no le gustan
+                <button id="musicPrev" type="button" class="music-control" aria-label="Canción anterior">
+                  <i class="fas fa-backward-step"></i>
+                </button>
+                <button id="musicToggle" type="button" class="music-control music-control-main" aria-label="Reproducir música">
+                  <i class="fas fa-play"></i>
+                </button>
+                <button id="musicNext" type="button" class="music-control" aria-label="Siguiente canción">
+                  <i class="fas fa-forward-step"></i>
+                </button>
+                <button id="musicMute" type="button" class="music-control" aria-label="Silenciar música">
+                  <i class="fas fa-volume-low"></i>
+                </button>
+                <button id="musicListToggle" type="button" class="music-control" aria-label="Ver lista de canciones">
+                  <i class="fas fa-list"></i>
+                </button>
+                <span id="musicStatus" class="music-status">Música</span>
+                <div id="musicList" class="music-list-popover" hidden></div>
               </div>
               <h1
                 class="hero-title mt-6 text-5xl sm:text-6xl lg:text-8xl font-black leading-none"
@@ -993,6 +1010,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script defer src="/_vercel/insights/script.js"></script>
     <script defer src="/_vercel/speed-insights/script.js"></script>
+    <script src="js/one_year_tracks.js"></script>
     <script src="js/one_year.js"></script>
   </body>
 </html>

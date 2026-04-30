@@ -103,6 +103,14 @@ const funnyModalText = document.getElementById("funnyModalText");
 const funnyModalVideo = document.getElementById("funnyModalVideo");
 const funnyModalVideoSource = document.getElementById("funnyModalVideoSource");
 const closeFunnyModalButton = document.getElementById("closeFunnyModal");
+const oneYearAudio = document.getElementById("oneYearAudio");
+const musicPrevButton = document.getElementById("musicPrev");
+const musicToggleButton = document.getElementById("musicToggle");
+const musicNextButton = document.getElementById("musicNext");
+const musicMuteButton = document.getElementById("musicMute");
+const musicListToggleButton = document.getElementById("musicListToggle");
+const musicStatus = document.getElementById("musicStatus");
+const musicList = document.getElementById("musicList");
 let currentMemory = 0;
 let startX = 0;
 let dragX = 0;
@@ -110,6 +118,271 @@ let isDragging = false;
 let revealClicks = 0;
 let photoStopClicks = 0;
 let shouldHidePhotoStopCard = false;
+let videoSectionInView = false;
+
+const fallbackTracks = [
+  {
+    title: "Niña Bonita",
+    src: "music/Chino%20%26%20Nacho%20-%20Ni%C3%B1a%20Bonita%20-%20ChinoNachoVEVO.mp3",
+  },
+  {
+    title: "Una Cita",
+    src: "music/Una%20Cita.mp3",
+  },
+];
+
+const oneYearTracks = Array.isArray(window.ONE_YEAR_TRACKS) && window.ONE_YEAR_TRACKS.length
+  ? window.ONE_YEAR_TRACKS
+  : fallbackTracks;
+let trackQueue = [];
+let playedTracks = [];
+let currentTrackIndex = -1;
+let musicUserPaused = false;
+let musicSuspendedByVideo = false;
+let musicStartedOnce = false;
+
+function shuffleIndexes(length, avoidFirst = -1) {
+  const indexes = Array.from({ length }, (_, index) => index);
+
+  for (let index = indexes.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [indexes[index], indexes[randomIndex]] = [indexes[randomIndex], indexes[index]];
+  }
+
+  if (indexes.length > 1 && indexes[0] === avoidFirst) {
+    [indexes[0], indexes[1]] = [indexes[1], indexes[0]];
+  }
+
+  return indexes;
+}
+
+function setMusicIcon(isPlaying) {
+  const icon = musicToggleButton?.querySelector("i");
+
+  if (!icon) {
+    return;
+  }
+
+  icon.className = isPlaying ? "fas fa-pause" : "fas fa-play";
+  musicToggleButton.setAttribute("aria-label", isPlaying ? "Pausar música" : "Reproducir música");
+}
+
+function setMuteIcon() {
+  const icon = musicMuteButton?.querySelector("i");
+
+  if (!icon || !oneYearAudio) {
+    return;
+  }
+
+  icon.className = oneYearAudio.muted ? "fas fa-volume-xmark" : "fas fa-volume-low";
+  musicMuteButton.classList.toggle("is-active", oneYearAudio.muted);
+  musicMuteButton.setAttribute("aria-label", oneYearAudio.muted ? "Activar música" : "Silenciar música");
+}
+
+function updateMusicStatus() {
+  if (!musicStatus) {
+    return;
+  }
+
+  const track = oneYearTracks[currentTrackIndex];
+  musicStatus.textContent = track?.title || "Música";
+  musicStatus.title = track?.title || "";
+}
+
+function renderMusicList() {
+  if (!musicList) {
+    return;
+  }
+
+  musicList.replaceChildren();
+  oneYearTracks.forEach((track, index) => {
+    const button = document.createElement("button");
+    const icon = document.createElement("i");
+    const label = document.createElement("span");
+
+    button.type = "button";
+    button.className = index === currentTrackIndex ? "is-active" : "";
+    icon.className = "fas fa-music";
+    label.textContent = track.title || `Canción ${index + 1}`;
+    button.append(icon, label);
+    button.addEventListener("click", () => {
+      selectTrack(index, true);
+      musicList.hidden = true;
+    });
+    musicList.appendChild(button);
+  });
+}
+
+function loadTrack(index) {
+  if (!oneYearAudio || !oneYearTracks[index]) {
+    return;
+  }
+
+  currentTrackIndex = index;
+  oneYearAudio.src = oneYearTracks[index].src;
+  oneYearAudio.volume = 0.18;
+  updateMusicStatus();
+  renderMusicList();
+}
+
+function refillTrackQueue() {
+  trackQueue = shuffleIndexes(oneYearTracks.length, currentTrackIndex);
+}
+
+function nextTrack(shouldPlay = true) {
+  if (!oneYearAudio || oneYearTracks.length === 0) {
+    return;
+  }
+
+  if (currentTrackIndex >= 0) {
+    playedTracks.push(currentTrackIndex);
+  }
+
+  if (!trackQueue.length) {
+    refillTrackQueue();
+  }
+
+  loadTrack(trackQueue.shift());
+
+  if (shouldPlay) {
+    playMusic();
+  }
+}
+
+function previousTrack() {
+  if (!oneYearAudio || !playedTracks.length) {
+    return;
+  }
+
+  const previousIndex = playedTracks.pop();
+  if (currentTrackIndex >= 0) {
+    trackQueue.unshift(currentTrackIndex);
+  }
+  loadTrack(previousIndex);
+  playMusic();
+}
+
+function selectTrack(index, shouldPlay = true) {
+  if (!oneYearTracks[index]) {
+    return;
+  }
+
+  if (currentTrackIndex >= 0 && currentTrackIndex !== index) {
+    playedTracks.push(currentTrackIndex);
+  }
+
+  trackQueue = trackQueue.filter((trackIndex) => trackIndex !== index);
+  loadTrack(index);
+
+  if (shouldPlay) {
+    playMusic();
+  }
+}
+
+function playMusic() {
+  if (!oneYearAudio || videoSectionInView || !oneYearAudio.src) {
+    return Promise.resolve();
+  }
+
+  musicUserPaused = false;
+  oneYearAudio.volume = 0.18;
+  return oneYearAudio.play()
+    .then(() => {
+      musicStartedOnce = true;
+      setMusicIcon(true);
+    })
+    .catch(() => {
+      setMusicIcon(false);
+      if (musicStatus) {
+        musicStatus.textContent = "Toca play";
+      }
+    });
+}
+
+function pauseMusic({ byUser = false, byVideo = false } = {}) {
+  if (!oneYearAudio) {
+    return;
+  }
+
+  if (byUser) {
+    musicUserPaused = true;
+  }
+
+  if (byVideo && !oneYearAudio.paused) {
+    musicSuspendedByVideo = true;
+  }
+
+  oneYearAudio.pause();
+  setMusicIcon(false);
+}
+
+function pauseMusicForVideoSection() {
+  pauseMusic({ byVideo: true });
+}
+
+function resumeMusicAfterVideoSection() {
+  if (musicSuspendedByVideo && !musicUserPaused) {
+    musicSuspendedByVideo = false;
+    playMusic();
+  }
+}
+
+function initOneYearMusic() {
+  if (!oneYearAudio || oneYearTracks.length === 0) {
+    document.querySelector(".music-player")?.setAttribute("hidden", "");
+    return;
+  }
+
+  refillTrackQueue();
+  nextTrack(false);
+  setMuteIcon();
+  setMusicIcon(false);
+  renderMusicList();
+
+  oneYearAudio.addEventListener("play", () => setMusicIcon(true));
+  oneYearAudio.addEventListener("pause", () => setMusicIcon(false));
+  oneYearAudio.addEventListener("ended", () => nextTrack(true));
+
+  musicToggleButton?.addEventListener("click", () => {
+    if (oneYearAudio.paused) {
+      playMusic();
+    } else {
+      pauseMusic({ byUser: true });
+    }
+  });
+
+  musicPrevButton?.addEventListener("click", previousTrack);
+  musicNextButton?.addEventListener("click", () => nextTrack(true));
+  musicMuteButton?.addEventListener("click", () => {
+    oneYearAudio.muted = !oneYearAudio.muted;
+    setMuteIcon();
+  });
+  musicListToggleButton?.addEventListener("click", () => {
+    if (musicList) {
+      musicList.hidden = !musicList.hidden;
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    const clickedInsidePlayer = event.target instanceof Element
+      ? event.target.closest(".music-player")
+      : null;
+
+    if (!musicList || musicList.hidden || clickedInsidePlayer) {
+      return;
+    }
+    musicList.hidden = true;
+  });
+
+  playMusic();
+  window.addEventListener("pointerdown", () => {
+    if (!musicStartedOnce && !musicUserPaused) {
+      playMusic();
+    }
+  }, { once: true });
+}
+
+initOneYearMusic();
 
 function getMemorySpacing() {
   return window.innerWidth < 720 ? 112 : 168;
@@ -430,7 +703,6 @@ const videoSection = document.getElementById("video");
 let currentVideo = 0;
 let videoAudioStarted = false;
 let resumeVideoOnReturn = false;
-let videoSectionInView = false;
 
 carouselVideo.muted = false;
 carouselVideo.volume = 1;
@@ -455,8 +727,11 @@ const videoVisibilityObserver = new IntersectionObserver(
     if (!isInView) {
       resumeVideoOnReturn = !carouselVideo.paused && !carouselVideo.ended;
       carouselVideo.pause();
+      resumeMusicAfterVideoSection();
       return;
     }
+
+    pauseMusicForVideoSection();
 
     if (resumeVideoOnReturn) {
       carouselVideo.play().catch(() => {});

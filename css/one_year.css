@@ -68,6 +68,93 @@ body::before {
   transform-style: preserve-3d;
 }
 
+.music-player {
+  position: relative;
+  max-width: min(100%, 25rem);
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.music-control {
+  display: grid;
+  width: 1.95rem;
+  height: 1.95rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: #1e2444;
+  font-size: 0.78rem;
+  box-shadow: 0 8px 20px rgba(30, 36, 68, 0.08);
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.music-control:hover,
+.music-control.is-active {
+  background: #1e2444;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.music-control-main {
+  background: linear-gradient(135deg, #ff7a8a, #c44f87);
+  color: white;
+}
+
+.music-status {
+  max-width: 7.8rem;
+  overflow: hidden;
+  color: rgba(30, 36, 68, 0.64);
+  font-size: 0.68rem;
+  font-weight: 900;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.music-list-popover {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 0.55rem);
+  z-index: 12;
+  width: min(18rem, calc(100vw - 2.5rem));
+  max-height: 14rem;
+  overflow: auto;
+  border: 1px solid rgba(255, 255, 255, 0.84);
+  border-radius: 1.2rem;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 0.45rem;
+  box-shadow: 0 24px 58px rgba(30, 36, 68, 0.14);
+  backdrop-filter: blur(18px);
+}
+
+.music-list-popover button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.55rem;
+  border: 0;
+  border-radius: 0.9rem;
+  background: transparent;
+  color: rgba(30, 36, 68, 0.74);
+  padding: 0.65rem 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 850;
+  text-align: left;
+}
+
+.music-list-popover button.is-active,
+.music-list-popover button:hover {
+  background: rgba(255, 122, 138, 0.12);
+  color: #c44f87;
+}
+
 .top-photo-copy {
   font-size: clamp(1rem, 1.7vw, 1.22rem);
   line-height: 1.55;
@@ -576,6 +663,20 @@ body::before {
 }
 
 @media (max-width: 640px) {
+  .music-player {
+    gap: 0.35rem;
+    max-width: 100%;
+  }
+
+  .music-control {
+    width: 1.82rem;
+    height: 1.82rem;
+  }
+
+  .music-status {
+    max-width: 5.8rem;
+  }
+
   .video-carousel video,
   .memory-dialog img {
     min-height: 26rem;
