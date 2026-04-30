@@ -230,6 +230,63 @@
 
       renderHeroMedia(false);
 
+      function initCountdownBadges() {
+        const badges = Array.from(document.querySelectorAll("[data-countdown-target]"));
+
+        if (!badges.length) {
+          return;
+        }
+
+        const themes = [
+          { bg: "rgba(255, 122, 138, 0.15)", fg: "#c44f87", ring: "rgba(196, 79, 135, 0.22)" },
+          { bg: "rgba(115, 216, 193, 0.18)", fg: "#187b74", ring: "rgba(47, 157, 143, 0.24)" },
+          { bg: "rgba(255, 231, 154, 0.28)", fg: "#8a6722", ring: "rgba(255, 184, 77, 0.28)" },
+          { bg: "rgba(154, 139, 255, 0.16)", fg: "#5f4b9a", ring: "rgba(95, 75, 154, 0.22)" },
+        ];
+
+        function plural(value, singular, pluralText) {
+          return value === 1 ? singular : pluralText;
+        }
+
+        function updateBadges() {
+          const now = Date.now();
+          const dayIndex = Math.floor(now / 86400000);
+
+          badges.forEach((badge, index) => {
+            const target = new Date(badge.dataset.countdownTarget || "").getTime();
+            const theme = themes[(dayIndex + index) % themes.length];
+
+            badge.style.setProperty("--countdown-bg", theme.bg);
+            badge.style.setProperty("--countdown-fg", theme.fg);
+            badge.style.setProperty("--countdown-ring", theme.ring);
+
+            if (!Number.isFinite(target)) {
+              badge.textContent = "Fecha guardada";
+              return;
+            }
+
+            const remaining = Math.max(0, target - now);
+            const totalMinutes = Math.ceil(remaining / 60000);
+            const days = Math.floor(totalMinutes / 1440);
+            const hours = Math.floor((totalMinutes % 1440) / 60);
+            const minutes = totalMinutes % 60;
+
+            if (remaining <= 0) {
+              badge.textContent = "Ya casi se abre";
+              return;
+            }
+
+            const label = badge.dataset.countdownLabel || "Faltan";
+            badge.textContent = `${label} ${days} ${plural(days, "d\u00eda", "d\u00edas")} · ${hours}h ${String(minutes).padStart(2, "0")}m`;
+          });
+        }
+
+        updateBadges();
+        window.setInterval(updateBadges, 60000);
+      }
+
+      initCountdownBadges();
+
       const yearGateModal = document.getElementById("yearGateModal");
       const yearGateDialog = yearGateModal?.querySelector(".year-gate-dialog");
       const yearGateForm = document.getElementById("yearGateForm");

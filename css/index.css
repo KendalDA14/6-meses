@@ -61,6 +61,34 @@ body {
   filter: saturate(0.82);
 }
 
+.countdown-badge {
+  --countdown-bg: rgba(255, 255, 255, 0.86);
+  --countdown-fg: #c44f87;
+  --countdown-ring: rgba(196, 79, 135, 0.18);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2rem;
+  max-width: 12.5rem;
+  border: 1px solid var(--countdown-ring);
+  border-radius: 999px;
+  background: var(--countdown-bg);
+  color: var(--countdown-fg);
+  padding: 0.34rem 0.72rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: 0;
+  box-shadow: 0 12px 28px rgba(30, 36, 68, 0.08);
+  white-space: normal;
+  text-align: left;
+  transition:
+    background 260ms ease,
+    border-color 260ms ease,
+    color 260ms ease,
+    transform 260ms ease;
+}
+
 .locked-card::after {
   content: "";
   position: absolute;

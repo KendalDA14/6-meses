@@ -1,13 +1,23 @@
 html {
   scroll-behavior: smooth;
+  min-width: 100%;
+  min-height: 100%;
 }
 
 body {
+  position: relative;
+  min-width: 100%;
+  min-height: 100%;
   overflow-x: hidden;
   background: #fff6fb;
 }
 
-.soft-grid {
+body::before {
+  content: "";
+  position: fixed;
+  inset: -2rem;
+  z-index: 0;
+  pointer-events: none;
   background:
     linear-gradient(
       180deg,
@@ -15,7 +25,17 @@ body {
       rgba(255, 246, 251, 0.74) 48%,
       rgba(244, 255, 251, 0.86) 100%
     ),
-    url("../img/one_year/foto12.jpeg") center 20% / cover fixed no-repeat;
+    url("../img/one_year/foto12.jpeg") center 20% / cover no-repeat;
+  transform: translateZ(0);
+}
+
+.soft-grid {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
 }
 
 .floating-layer {
@@ -581,8 +601,7 @@ body {
 }
 
 @media (max-width: 768px) {
-  .soft-grid {
-    background-attachment: scroll;
+  body::before {
     background-position: center top;
   }
 }
